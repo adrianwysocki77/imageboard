@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+<head>
+    <title>Imageboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+
+
+
+    <div class="background">
+        <div class="flexbackground">
+            <div class="colorbackgroundtwo">
+                <img src="banana.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundfive">
+                <img src="blue.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundone">
+                <img src="grapes.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundtree">
+                <img src="apple.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundfour">
+                <img src="avocado.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundsix">
+                <img src="orange.svg" alt="apple" class="icon">
+            </div>
+            <div class="colorbackgroundseven">
+                <img src="pitaya.svg" alt="apple" class="icon">
+            </div>
+        </div>
+
+    </div>
+
+    <div id="main">
+<!-- ////////////////////////////////////////////////////////////////////////////// ADirS CODE AdirS CODE -->
+        <first-component
+        v-if="selectedImage"
+        post-title="My amazing article"
+        :id="selectedImage"
+        @close="closeMe"
+        @tag="showByTags"
+        ></first-component>
+
+        <tag-component
+        v-if="tag"
+        :id="selectedImage"
+        @close="closeTag"
+        ></tag-component>
+
+        <div class="header">
+            FRUITY BOARD
+        </div>
+
+        <div class="form">
+            <form>
+                <div class="inputs">
+                    <div class="flexinput">
+                        <input v-model="title" name="title" placeholder="title" type="text" class="input"  maxlength="20">
+                        <input v-model="description" name="description" placeholder="description" type="text" class="input">
+                    </div>
+                    <div class="flexinput">
+                        <input v-model="username" name="username" placeholder="username" type="text" class="input">
+                        <input v-model="tags" name="tags" placeholder="tags" type="text" class="input">
+                    </div>
+
+                    <div class="inputsupload">
+                        <div>
+                            <input @change='handleChange' name="file" type="file" accept="image/*" class="choosepic">
+                        </div>
+                        <div class="anotherdiv">
+                            <button @click='handleClick' class="upload">upload</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- handle changed jest specjalnie dla plikow -->
+
+            </form>
+        </div>
+
+
+        <div v-if="noFruit" class="nofruit">
+            <div class="one">
+                No fruit on the picture!!!
+            </div>
+            <div class="canceldiv">
+                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
+            </div>
+        </div>
+
+        <div v-if="wrongFormat" class="nofruit">
+            <div class="one">
+                Only accepted format of the picture is jpg!!!
+            </div>
+            <div class="canceldiv">
+                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
+            </div>
+        </div>
+<!-- ///////////////////////////////////////////////////////////////////////////////
+// IMAGES IN MAIN IMG CONTAINER -->
+        <div v-if="images" class="imgcontainer">
+            <div class="imgdivcontainer">
+                <div v-for="c in images" class="imgdiv">
+                    <a :href="'#' + c.id" class="flex">
+                        <img :src="c.url" class="imgindiv">
+                    </a>
+                        <!-- <div class="relative">
+                            <div class="textinimgdiv absolute">
+                                {{c.title}}
+                            </div>
+                        </div> -->
+
+                </div>
+            </div>
+            <div v-if="lastId" class="more">
+                <div>
+                    <button @click="showmore" class="more">Show More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- ///////////////////////////////////////////////////////////////////////////////
+//PICTURES BY TAG -->
+    <script type="text/x-template" id="templatetwo" >
+       <div class="selectedImage">
+           <div class="x" @click="closeModal">
+                <a :href="'#' + id">
+                   X
+               </a>
+           </div>
+            pictures for tag: {{tag}}
+            <div v-if="images" class="imgcontainer">
+                <div class="imgdivcontainer">
+                    <div v-for="c in images" class="imgdiv">
+                        <a :href="'#' + c.id" class="flex">
+                            <img :src="c.url" class="imgindiv">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </script>
+<!-- ///////////////////////////////////////////////////////////////////////////////
+//SELECTED IMAGE -->
+
+    <script type="text/x-template" id="template" >
+
+        <div class="overlay">
+
+
+            <!-- <div class="arrxcontainer">
+                <div class="inarrxcontainer">
+                    <div class="newarrows">
+                        <div v-if="smallerId">
+                            <a :href="'#' + smallerId">
+                                <img src="left.svg" class="arrow">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="newarrows">
+                        <div v-if="biggerId">
+                            <a :href="'#' + biggerId">
+                                <img src="right.svg" class="arrow">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+
+            <div class="xclose" @click="closeModal">
+                <div class="close"></div>
+            </div>
+
+                <div class="container">
+                    <!-- <div class="newimgdivinselected">
+                        <img :src="url" class="imginselected">
+                    </div> -->
+                    <!-- <div class="newimgdivinselected">
+                        <img :src="url" class="imginselected" id="imageid">
+                    </div> -->
+                    <div class="picture">
+                        <!-- <div class="testdiv"></div> -->
+                        <img :src="url" class="imginselected" id="imageid">
+                    </div>
+                    <div class="other">
+                        <!-- <div class="testdiv"></div> -->
+                        <div class="title">
+                            {{title}}
+                        </div>
+                        <div class="description">
+                            <img src="pen.svg" class="penicon">
+                            {{description}}
+                        </div>
+                        <div class="author">
+                            Added by: {{username}} {{created_at}}
+                        </div>
+                        <div>
+                        </div>
+                        <div class="comments">
+                            <div class="commentstext">Comments</div>
+
+                            <div class="comments-div" id="comments-div">
+                                <div class="single-comment" v-for="c in comments">
+
+                                    <div class="text">
+                                        <div class="username">
+                                            {{c.username}}
+                                        </div>
+                                        {{c.comment}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="addcomment">
+                                <form class="formdiv">
+                                    <div v-if="empty_comment" class="nofruit">
+                                        <div class="one">
+                                            No fruit on the picture!!!
+                                        </div>
+                                        <div class="canceldiv">
+                                            <img src="cancel.svg" class="cancel" @click='closeEmptyComment'>
+                                        </div>
+                                    </div>
+                                    <div class="textareadiv">
+                                        <textarea type="textarea" v-model="comment" name="comment" placeholder="add comment" class="textarea">
+                                        </textarea>
+                                    </div>
+                                    <div class="submitcomment">
+                                        <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="selectedinput">
+                                        <button @click='addComment' class="submit">submit</button>
+                                    </div>
+
+
+                                </form>
+                        </div>
+                    </div>
+
+            </div>
+
+
+        </div>
+        <!-- <div class="selectedImage">
+
+                <div class="selectedheader">
+                    {{title}}
+                </div>
+
+                <div class="big">
+                    <div class="selectedimgcontainer">
+
+
+                        <div class="inselected">
+                            <div class="newimgdivinselected">
+                                <img :src="url" class="imginselected">
+                            </div>
+                        </div>
+                        <div class="inselected2">
+                            <div class="inselectedrighttop">
+                                <div class="arrxcontainer">
+                                    <div class="inarrxcontainer">
+
+                                        <div class="newarrows">
+                                            <div v-if="smallerId">
+                                                <a :href="'#' + smallerId">
+                                                    <img src="left.svg" class="arrow">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="newarrows">
+                                            <div v-if="biggerId">
+                                                <a :href="'#' + biggerId">
+                                                    <img src="right.svg" class="arrow">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inarrxcontainer">
+                                        <div class="newx" @click="closeModal">
+                                            X
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="containerdescription">
+                                        <div class="descriptionusername">
+                                           Uploaded by: {{username}}
+                                       </div>
+
+                                       <div>
+                                           description: {{description}}
+                                       </div>
+                                       <div class="inputcomment">
+                                           <form class="flex">
+                                               <div>
+                                                   <input type="text" v-model="comment" name="comment" placeholder="comment" class="selectedinput">
+                                               </div>
+                                               <div>
+                                                   <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="selectedinput">
+                                               </div>
+                                               <div>
+                                                   <button @click='addComment'>submit</button>
+                                               </div>
+                                           </form>
+                                       </div>
+                                    </div>
+
+
+
+                            </div>
+                            <div class="inselectedrightbottom">
+                                <div class="flex30">
+                                    <div v-if='tags'>
+                                        <div class="single-comment" v-for="c in tags">
+                                            <a :href="'#' +'/tags/'+c.tag">
+                                                <p class='comment-content'>Tag: {{c.tag}}</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex70">
+                                    <div class="comments-container" v-if='comments'>
+                                        <div class="single-comment" v-for="c in comments">
+                                            <p class='comment-content'>Comment: {{c.comment}}</p>
+                                            <p class='user-comment'>Name: {{c.username}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div> -->
+
+    </script>
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
