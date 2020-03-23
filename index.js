@@ -24,39 +24,39 @@ app.use(
 );
 ///////////////////////////////////////////////////////////////////////////////
 //BASIC AUTH
-const basicAuth = require("basic-auth");
-
-const auth = function(req, res, next) {
-    console.log("secrets.adi: ", secrets.adi);
-    console.log("secrets.adipass: ", secrets.adipass);
-
-    const creds = basicAuth(req);
-
-    function checkCred(creds) {
-        let trueCreds =
-            !creds ||
-            creds.name != secrets.adi ||
-            creds.pass != secrets.adipass;
-
-        return trueCreds;
-    }
-
-    if (checkCred(creds)) {
-        res.setHeader(
-            "WWW-Authenticate",
-            'Basic realm="Enter your credentials to see this stuff."'
-        );
-        res.sendStatus(401);
-    } else {
-        if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
-            req.session.admin = true;
-        }
-        console.log("req.session.admin: ", req.session.admin);
-        next();
-    }
-};
-
-app.use(auth);
+// const basicAuth = require("basic-auth");
+//
+// const auth = function(req, res, next) {
+//     console.log("secrets.adi: ", secrets.adi);
+//     console.log("secrets.adipass: ", secrets.adipass);
+//
+//     const creds = basicAuth(req);
+//
+//     function checkCred(creds) {
+//         let trueCreds =
+//             !creds ||
+//             creds.name != secrets.adi ||
+//             creds.pass != secrets.adipass;
+//
+//         return trueCreds;
+//     }
+//
+//     if (checkCred(creds)) {
+//         res.setHeader(
+//             "WWW-Authenticate",
+//             'Basic realm="Enter your credentials to see this stuff."'
+//         );
+//         res.sendStatus(401);
+//     } else {
+//         if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
+//             req.session.admin = true;
+//         }
+//         console.log("req.session.admin: ", req.session.admin);
+//         next();
+//     }
+// };
+//
+// app.use(auth);
 
 ///////////////////////////////////////////////////////////////////////////////
 // ALL FRESH FRUITS!!!

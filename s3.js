@@ -21,7 +21,7 @@ exports.upload = (req, res, next) => {
     }
 
     const { filename, mimetype, path, size } = req.file;
-    let image;
+    // let image;
 
     // fs.readFile("./uploads/fruit.jpg", function(err, data) {
     //     if (err) throw err;
@@ -29,9 +29,12 @@ exports.upload = (req, res, next) => {
     //     image = data;
     // });
     // console.log("data out of readFile: ", image);
+    console.log("filename");
+    let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
+    // console.log(contents);
 
-    var contents = fs.readFileSync("./uploads/fruit.jpg");
-    console.log(contents);
+    // var stats = fs.statSync("myfile.txt");
+    // var fileSizeInBytes = stats["size"];
 
     sharp(contents)
         .rotate()
