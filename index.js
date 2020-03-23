@@ -251,7 +251,7 @@ app.get("/images", (req, res) => {
     console.log("**************************************GET/images");
     db.getAll()
         .then(result => {
-            // console.log(result.rows);
+            console.log("result.rows!!!!!!!!: ", result.rows);
             res.json(result.rows);
         })
         .catch(err => {

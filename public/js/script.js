@@ -304,7 +304,10 @@
 
             axios.get("/images").then(function(res) {
                 console.log("**************************axios.get/images");
-                var lastId = res.data[res.data.length - 1].id;
+
+                if (!res.data[res.data.length - 1].id == undefined) {
+                    var lastId = res.data[res.data.length - 1].id;
+                }
                 console.log("IMAGES: ", vueInstance.images);
                 // console.log("lastId: ", lastId);
                 vueInstance.lastId = lastId;
