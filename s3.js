@@ -33,8 +33,10 @@ exports.upload = (req, res, next) => {
     let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
     // console.log(contents);
 
-    // var stats = fs.statSync("myfile.txt");
-    // var fileSizeInBytes = stats["size"];
+    var stats = fs.statSync(`./uploads/${req.file.filename}`);
+    var fileSizeInBytes = stats["size"];
+
+    console.log("req.file: ", req.file);
 
     sharp(contents)
         .rotate()
@@ -46,6 +48,10 @@ exports.upload = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
+
+    var stats = fs.statSync(`./uploads/${req.file.filename}`);
+    var fileSizeInBytes = stats["size"];
+    console.log("fileSizeInBytes: ", fileSizeInBytes);
 
     console.log("req.file: ", req.file);
 
