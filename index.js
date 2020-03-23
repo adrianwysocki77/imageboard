@@ -3,7 +3,7 @@ const app = express();
 const db = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
-let secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
 app.use(express.static("./public"));
 /////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ const googleVision = async function(url) {
     // Creates a client
 
     const client = new vision.ImageAnnotatorClient({
-        keyFilename: "./fruityboard.json"
+        keyFilename: "./secrets.json"
     });
     ///////////////////////////////////////////////////////////////////////////////
     // api for text!!!!
