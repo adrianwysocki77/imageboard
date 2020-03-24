@@ -203,7 +203,7 @@ const googleVision = async function(url) {
     let client;
     if (process.env.NODE_ENV === "production") {
         client = new vision.ImageAnnotatorClient({
-            keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+            keyFilename: process.env
         });
     } else {
         client = new vision.ImageAnnotatorClient({
@@ -284,39 +284,39 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const tags = req.body.tags;
     const arrTags = tags.replace(" ", "").split(",");
     let fruitInside = false;
-    // console.log("arrTags: ", arrTags);
-    // console.log("JUST REEEEEQQ!!!!!: ", req.body);
-    // console.log("imageUrl: ", imageUrl);
-    // console.log("title: ", title);
-    // console.log("description: ", description);
-    // console.log("username: ", username);
-    // console.log("tags: ", tags);
-    // console.log("tags.lenght: ", tags.length);
-    // console.log("imageUrl: ", imageUrl);
-    ///////////////////////////////////////////////////////////////////////////////
-    // googleVision(imageUrl)
-    //     .then(result => {
-    //         // console.log("possible fruit in arr: ", result);
-    //         let possibleFruitInside = [];
-    //         for (let i = 0; i < result.length; i++) {
-    //             // changing letters in results to toLowerCase
-    //             // console.log(
-    //             //     "result[i].toLowerCase(): ",
-    //             //     result[i].toLowerCase()
-    //             // );
-    //             possibleFruitInside.push(result[i].toLowerCase());
-    //         }
-    //         // console.log("possibleFruitInside: ", possibleFruitInside);
-    //
-    //         for (let i = 0; i < possibleFruitInside.length; i++) {
-    //             for (let u = 0; u < allFruits.length; u++) {
-    //                 if (possibleFruitInside[i] == allFruits[u]) {
-    //                     console.log("fruit inside true!!!!!");
+    console.log("arrTags: ", arrTags);
+    console.log("JUST REEEEEQQ!!!!!: ", req.body);
+    console.log("imageUrl: ", imageUrl);
+    console.log("title: ", title);
+    console.log("description: ", description);
+    console.log("username: ", username);
+    console.log("tags: ", tags);
+    console.log("tags.lenght: ", tags.length);
+    console.log("imageUrl: ", imageUrl);
+    /////////////////////////////////////////////////////////////////////////////
+    googleVision(imageUrl)
+        .then(result => {
+            // console.log("possible fruit in arr: ", result);
+            let possibleFruitInside = [];
+            for (let i = 0; i < result.length; i++) {
+                // changing letters in results to toLowerCase
+                // console.log(
+                //     "result[i].toLowerCase(): ",
+                //     result[i].toLowerCase()
+                // );
+                possibleFruitInside.push(result[i].toLowerCase());
+            }
+            // console.log("possibleFruitInside: ", possibleFruitInside);
+
+            for (let i = 0; i < possibleFruitInside.length; i++) {
+                for (let u = 0; u < allFruits.length; u++) {
+                    if (possibleFruitInside[i] == allFruits[u]) {
+                        console.log("fruit inside true!!!!!");
     fruitInside = true;
-    //             break;
-    //         }
-    //     }
-    // }
+                break;
+            }
+        }
+    }
     ///////////////////////////////////////////////////////////////////////////////
     if (fruitInside) {
         db.addImage(imageUrl, username, title, description)
