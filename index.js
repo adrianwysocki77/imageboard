@@ -202,11 +202,6 @@ const googleVision = async function(url) {
 
     let client;
     if (process.env.NODE_ENV === "production") {
-        console.log(
-            "PRODUCTION!!!: ",
-            process.env.GOOGLE_APPLICATION_CREDENTIALS
-        );
-
         client = new vision.ImageAnnotatorClient({
             keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
         });
@@ -233,7 +228,7 @@ const googleVision = async function(url) {
         //        console.log(label.description);
         fruits.push(label.description);
     });
-    console.log("fruits: ", fruits);
+    // console.log("fruits: ", fruits);
     return fruits;
 };
 
