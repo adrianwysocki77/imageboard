@@ -1,6 +1,6 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
-// const sharp = require("sharp");
+const sharp = require("sharp");
 let secrets;
 
 if (process.env.NODE_ENV == "production") {
@@ -30,9 +30,21 @@ exports.upload = (req, res, next) => {
     // });
     // console.log("data out of readFile: ", image);
     // console.log("filename");
-    // let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
-    // // console.log(contents);
     //
+    ///////////////////////////////////////////////////////////////////////////////
+    // let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
+    //
+    // sharp(contents)
+    //     .toFile("output.gif")
+    //     .then(info => {
+    //         console.log("something: ", info);
+    //         next();
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+
+    ////////////////////////////////////////////////////////////////////////////////
     // var stats = fs.statSync(`./uploads/${req.file.filename}`);
     // var fileSizeInBytes = stats["size"];
     //
