@@ -192,44 +192,48 @@ const allFruits = arrFruitsLower.split("\n");
 //GOOGLE CLOUD VISION
 
 const googleVision = async function(url) {
-    // Imports the Google Cloud client library
-    const vision = require("@google-cloud/vision");
-    // Creates a client
+    try {
+        // Imports the Google Cloud client library
+        const vision = require("@google-cloud/vision");
+        // Creates a client
 
-    // const client = new vision.ImageAnnotatorClient({
-    //     keyFilename: "./secrets.json"
-    // });
+        // const client = new vision.ImageAnnotatorClient({
+        //     keyFilename: "./secrets.json"
+        // });
 
-    let client;
-    if (process.env.NODE_ENV === "production") {
-        client = new vision.ImageAnnotatorClient({
-            keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+        let client;
+        if (process.env.NODE_ENV === "production") {
+            client = new vision.ImageAnnotatorClient({
+                keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+            });
+        } else {
+            client = new vision.ImageAnnotatorClient({
+                keyFilename: "google-credentials.json"
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        // api for text!!!!
+        // // Performs text detection on the local file
+        // const [result] = await client.textDetection(url);
+        // const detections = result.textAnnotations;
+        // console.log("Text:");
+        // detections.forEach(text => console.log(text));
+        ///////////////////////////////////////////////////////////////////////////////
+        // Performs label detection on the image file
+        const [result] = await client.labelDetection(url);
+        // console.log("result from google API:", result);
+        const labels = result.labelAnnotations;
+        let fruits = [];
+        labels.forEach(label => {
+            //        console.log(label.description);
+            fruits.push(label.description);
         });
-    } else {
-        client = new vision.ImageAnnotatorClient({
-            keyFilename: "google-credentials.json"
-        });
+        // console.log("fruits: ", fruits);
+        return fruits;
+    } catch (e) {
+        console.log("error: ", e);
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // api for text!!!!
-    // // Performs text detection on the local file
-    // const [result] = await client.textDetection(url);
-    // const detections = result.textAnnotations;
-    // console.log("Text:");
-    // detections.forEach(text => console.log(text));
-    ///////////////////////////////////////////////////////////////////////////////
-    // Performs label detection on the image file
-    const [result] = await client.labelDetection(url);
-    // console.log("result from google API:", result);
-    const labels = result.labelAnnotations;
-    let fruits = [];
-    labels.forEach(label => {
-        //        console.log(label.description);
-        fruits.push(label.description);
-    });
-    // console.log("fruits: ", fruits);
-    return fruits;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
