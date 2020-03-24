@@ -207,7 +207,7 @@ const googleVision = async function(url) {
         });
     } else {
         client = new vision.ImageAnnotatorClient({
-            keyFilename: "google-credentials.json"
+            keyFilename: "./ggoogle-credentials.json"
         });
     }
 
