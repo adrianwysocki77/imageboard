@@ -196,9 +196,21 @@ const googleVision = async function(url) {
     const vision = require("@google-cloud/vision");
     // Creates a client
 
-    const client = new vision.ImageAnnotatorClient({
-        keyFilename: "./secrets.json"
-    });
+    // const client = new vision.ImageAnnotatorClient({
+    //     keyFilename: "./secrets.json"
+    // });
+
+    let client;
+    if (process.env.NODE_ENV === "production") {
+        client = new vision.ImageAnnotatorClient({
+            keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+        });
+    } else {
+        client = new vision.ImageAnnotatorClient({
+            keyFilename: "google-credentials.json"
+        });
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // api for text!!!!
     // // Performs text detection on the local file
@@ -282,72 +294,78 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log("tags.lenght: ", tags.length);
     // console.log("imageUrl: ", imageUrl);
     ///////////////////////////////////////////////////////////////////////////////
-    // googleVision(imageUrl)
-    //     .then(result => {
-    //         // console.log("possible fruit in arr: ", result);
-    //         let possibleFruitInside = [];
-    //         for (let i = 0; i < result.length; i++) {
-    //             // changing letters in results to toLowerCase
-    //             // console.log(
-    //             //     "result[i].toLowerCase(): ",
-    //             //     result[i].toLowerCase()
-    //             // );
-    //             possibleFruitInside.push(result[i].toLowerCase());
-    //         }
-    //         // console.log("possibleFruitInside: ", possibleFruitInside);
-    //
-    //         for (let i = 0; i < possibleFruitInside.length; i++) {
-    //             for (let u = 0; u < allFruits.length; u++) {
-    //                 if (possibleFruitInside[i] == allFruits[u]) {
-    //                     console.log("fruit inside true!!!!!");
-    fruitInside = true;
-    //             break;
-    //         }
-    //     }
-    // }
-    ///////////////////////////////////////////////////////////////////////////////
-    if (fruitInside) {
-        db.addImage(imageUrl, username, title, description)
-            .then(addedImage => {
-                // console.log("inserted images: ", addedImage);
-                // console.log("result.id: ", addedImage[0].id);
-                if (tags !== "") {
-                    // console.log("arrTags.length > 0");
-                    for (let i = 0; i < arrTags.length; i++) {
-                        // console.log("tags [i]: ", i);
-                        db.insertTag(arrTags[i], addedImage[0].id)
-                            .then(insertedTags => {
-                                console.log("insertedTags:", insertedTags);
-                                // console.log("i:", i);
-                                if (i == arrTags.length - 1) {
-                                    // console.log("last tag???");
-                                    // console.log("addedImage: ", addedImage);
+    googleVision(imageUrl)
+        .then(result => {
+            // console.log("possible fruit in arr: ", result);
+            let possibleFruitInside = [];
+            for (let i = 0; i < result.length; i++) {
+                // changing letters in results to toLowerCase
+                // console.log(
+                //     "result[i].toLowerCase(): ",
+                //     result[i].toLowerCase()
+                // );
+                possibleFruitInside.push(result[i].toLowerCase());
+            }
+            // console.log("possibleFruitInside: ", possibleFruitInside);
 
-                                    res.json(addedImage);
-                                }
-                            })
-                            .catch(err => {
-                                console.log("err in inserting tag: ", err);
-                            });
+            for (let i = 0; i < possibleFruitInside.length; i++) {
+                for (let u = 0; u < allFruits.length; u++) {
+                    if (possibleFruitInside[i] == allFruits[u]) {
+                        console.log("fruit inside true!!!!!");
+                        fruitInside = true;
+                        break;
                     }
-                } else {
-                    res.json(addedImage);
                 }
-            })
-            .catch(err => {
-                console.log("error in addImage: ", err);
-            });
-    } else {
-        res.json({
-            success: false
+            }
+            ///////////////////////////////////////////////////////////////////////////////
+            if (fruitInside) {
+                db.addImage(imageUrl, username, title, description)
+                    .then(addedImage => {
+                        // console.log("inserted images: ", addedImage);
+                        // console.log("result.id: ", addedImage[0].id);
+                        if (tags !== "") {
+                            // console.log("arrTags.length > 0");
+                            for (let i = 0; i < arrTags.length; i++) {
+                                // console.log("tags [i]: ", i);
+                                db.insertTag(arrTags[i], addedImage[0].id)
+                                    .then(insertedTags => {
+                                        console.log(
+                                            "insertedTags:",
+                                            insertedTags
+                                        );
+                                        // console.log("i:", i);
+                                        if (i == arrTags.length - 1) {
+                                            // console.log("last tag???");
+                                            // console.log("addedImage: ", addedImage);
+
+                                            res.json(addedImage);
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log(
+                                            "err in inserting tag: ",
+                                            err
+                                        );
+                                    });
+                            }
+                        } else {
+                            res.json(addedImage);
+                        }
+                    })
+                    .catch(err => {
+                        console.log("error in addImage: ", err);
+                    });
+            } else {
+                res.json({
+                    success: false
+                });
+            }
+            ///////////////////////////////////////////////////////////////////////////////
+            //
+        })
+        .catch(err => {
+            console.log("err in googleVision: ", err);
         });
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    //
-    // })
-    // .catch(err => {
-    //     console.log("err in googleVision: ", err);
-    // });
     ////////////////////////////////////////////////////////////////////////////////
     //after query is successful, send a response
 });

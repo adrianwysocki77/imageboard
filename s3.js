@@ -1,6 +1,6 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
-const sharp = require("sharp");
+// const sharp = require("sharp");
 let secrets;
 
 if (process.env.NODE_ENV == "production") {
@@ -29,31 +29,32 @@ exports.upload = (req, res, next) => {
     //     image = data;
     // });
     // console.log("data out of readFile: ", image);
-    console.log("filename");
-    let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
-    // console.log(contents);
-
-    var stats = fs.statSync(`./uploads/${req.file.filename}`);
-    var fileSizeInBytes = stats["size"];
-
-    console.log("req.file: ", req.file);
-
-    sharp(contents)
-        .rotate()
-        .resize(300)
-        .toBuffer()
-        .then(data => {
-            console.log("data sharp compression: ", data);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-
-    var stats = fs.statSync(`./uploads/${req.file.filename}`);
-    var fileSizeInBytes = stats["size"];
-    console.log("fileSizeInBytes: ", fileSizeInBytes);
-
-    console.log("req.file: ", req.file);
+    // console.log("filename");
+    // let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
+    // // console.log(contents);
+    //
+    // var stats = fs.statSync(`./uploads/${req.file.filename}`);
+    // var fileSizeInBytes = stats["size"];
+    //
+    // console.log("req.file: ", req.file);
+    //
+    // let g = sharp(contents)
+    //     .rotate()
+    //     .resize(300)
+    //     .toBuffer()
+    //     .then(data => {
+    //         console.log("data sharp compression: ", data);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // console.log("g!!!!: ", g);
+    //
+    // var stats = fs.statSync(`./uploads/${req.file.filename}`);
+    // var fileSizeInBytes = stats["size"];
+    // console.log("fileSizeInBytes: ", fileSizeInBytes);
+    //
+    // console.log("req.file: ", req.file);
 
     s3.putObject({
         Bucket: "spicedling",

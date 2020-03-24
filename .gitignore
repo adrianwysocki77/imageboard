@@ -1,4 +1,4 @@
 node_modules
 .DS_Store
 secrets.json
-fruityboard.json
+google-credentials.json
