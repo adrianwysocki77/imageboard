@@ -13,7 +13,7 @@ const cookieSession = require("cookie-session");
 if (process.env.NODE_ENV === "production") {
     secrets = process.env;
 } else {
-    secrets = require("./secrets");
+    secrets = require("./secrets.json");
 }
 
 app.use(
@@ -202,8 +202,13 @@ const googleVision = async function(url) {
 
     let client;
     if (process.env.NODE_ENV === "production") {
+        console.log(
+            "PRODUCTION!!!: ",
+            process.env.GOOGLE_APPLICATION_CREDENTIALS
+        );
+
         client = new vision.ImageAnnotatorClient({
-            keyFilename: process.env
+            keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
         });
     } else {
         client = new vision.ImageAnnotatorClient({
@@ -284,16 +289,16 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const tags = req.body.tags;
     const arrTags = tags.replace(" ", "").split(",");
     let fruitInside = false;
-    console.log("arrTags: ", arrTags);
-    console.log("JUST REEEEEQQ!!!!!: ", req.body);
-    console.log("imageUrl: ", imageUrl);
-    console.log("title: ", title);
-    console.log("description: ", description);
-    console.log("username: ", username);
-    console.log("tags: ", tags);
-    console.log("tags.lenght: ", tags.length);
-    console.log("imageUrl: ", imageUrl);
-    /////////////////////////////////////////////////////////////////////////////
+    // console.log("arrTags: ", arrTags);
+    // console.log("JUST REEEEEQQ!!!!!: ", req.body);
+    // console.log("imageUrl: ", imageUrl);
+    // console.log("title: ", title);
+    // console.log("description: ", description);
+    // console.log("username: ", username);
+    // console.log("tags: ", tags);
+    // console.log("tags.lenght: ", tags.length);
+    // console.log("imageUrl: ", imageUrl);
+    ///////////////////////////////////////////////////////////////////////////////
     googleVision(imageUrl)
         .then(result => {
             // console.log("possible fruit in arr: ", result);
@@ -312,54 +317,60 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                 for (let u = 0; u < allFruits.length; u++) {
                     if (possibleFruitInside[i] == allFruits[u]) {
                         console.log("fruit inside true!!!!!");
-    fruitInside = true;
-                break;
-            }
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    if (fruitInside) {
-        db.addImage(imageUrl, username, title, description)
-            .then(addedImage => {
-                // console.log("inserted images: ", addedImage);
-                // console.log("result.id: ", addedImage[0].id);
-                if (tags !== "") {
-                    // console.log("arrTags.length > 0");
-                    for (let i = 0; i < arrTags.length; i++) {
-                        // console.log("tags [i]: ", i);
-                        db.insertTag(arrTags[i], addedImage[0].id)
-                            .then(insertedTags => {
-                                console.log("insertedTags:", insertedTags);
-                                // console.log("i:", i);
-                                if (i == arrTags.length - 1) {
-                                    // console.log("last tag???");
-                                    // console.log("addedImage: ", addedImage);
-
-                                    res.json(addedImage);
-                                }
-                            })
-                            .catch(err => {
-                                console.log("err in inserting tag: ", err);
-                            });
+                        fruitInside = true;
+                        break;
                     }
-                } else {
-                    res.json(addedImage);
                 }
-            })
-            .catch(err => {
-                console.log("error in addImage: ", err);
-            });
-    } else {
-        res.json({
-            success: false
+            }
+            ///////////////////////////////////////////////////////////////////////////////
+            if (fruitInside) {
+                db.addImage(imageUrl, username, title, description)
+                    .then(addedImage => {
+                        // console.log("inserted images: ", addedImage);
+                        // console.log("result.id: ", addedImage[0].id);
+                        if (tags !== "") {
+                            // console.log("arrTags.length > 0");
+                            for (let i = 0; i < arrTags.length; i++) {
+                                // console.log("tags [i]: ", i);
+                                db.insertTag(arrTags[i], addedImage[0].id)
+                                    .then(insertedTags => {
+                                        console.log(
+                                            "insertedTags:",
+                                            insertedTags
+                                        );
+                                        // console.log("i:", i);
+                                        if (i == arrTags.length - 1) {
+                                            // console.log("last tag???");
+                                            // console.log("addedImage: ", addedImage);
+
+                                            res.json(addedImage);
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log(
+                                            "err in inserting tag: ",
+                                            err
+                                        );
+                                    });
+                            }
+                        } else {
+                            res.json(addedImage);
+                        }
+                    })
+                    .catch(err => {
+                        console.log("error in addImage: ", err);
+                    });
+            } else {
+                res.json({
+                    success: false
+                });
+            }
+            ///////////////////////////////////////////////////////////////////////////////
+            //
+        })
+        .catch(err => {
+            console.log("err in googleVision: ", err);
         });
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    //
-    // })
-    // .catch(err => {
-    //     console.log("err in googleVision: ", err);
-    // });
     ////////////////////////////////////////////////////////////////////////////////
     //after query is successful, send a response
 });
