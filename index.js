@@ -3,6 +3,7 @@ const app = express();
 const db = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
+const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
 app.use(express.static("./public"));
@@ -203,8 +204,18 @@ const googleVision = async function(url) {
 
         let client;
         if (process.env.NODE_ENV === "production") {
+            fs.writeFile(
+                "./google-credentials.json",
+                process.env.GOOGLE_CONFIG,
+                err => {
+                    console.log(err);
+                }
+            );
+
+            const GOOGLE_APPLICATION_CREDENTIALS = require("./google-credentials.json");
+
             client = new vision.ImageAnnotatorClient({
-                keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+                keyFilename: GOOGLE_APPLICATION_CREDENTIALS
             });
         } else {
             client = new vision.ImageAnnotatorClient({
