@@ -7,7 +7,9 @@ console.log("in production log credentials: ", process.env.GOOGLE_CONFIG);
 //
 // console.log("credeentials");
 
-const createCredentials = async function() {
+createCredentials();
+
+async function createCredentials() {
     try {
         await fs.writeFile(
             "./google-credentials.json",
@@ -22,4 +24,4 @@ const createCredentials = async function() {
     } catch (e) {
         console.log("error: ", e);
     }
-};
+}
