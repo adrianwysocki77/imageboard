@@ -6,7 +6,6 @@ console.log("in production log credentials: ", process.env.GOOGLE_CONFIG);
 // const credentials = require("./google-credentials.json");
 //
 // console.log("credeentials");
-createCredentials();
 
 const createCredentials = async function() {
     try {
