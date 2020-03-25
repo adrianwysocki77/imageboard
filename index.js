@@ -204,7 +204,7 @@ const googleVision = async function(url) {
 
         let client;
         if (process.env.NODE_ENV === "production") {
-            console.log("in production");
+            // console.log("in production");
             client = new vision.ImageAnnotatorClient({
                 // keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
                 keyFilename: "google-credentials.json"
