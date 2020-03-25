@@ -229,7 +229,7 @@ const googleVision = async function(url) {
             //        console.log(label.description);
             fruits.push(label.description);
         });
-        // console.log("fruits: ", fruits);
+        console.log("fruits: ", fruits);
         return fruits;
     } catch (e) {
         console.log("error: ", e);
