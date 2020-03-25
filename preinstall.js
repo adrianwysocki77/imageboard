@@ -18,4 +18,4 @@ process.env.alejaja = {
 
 let txt = require("./ala.txt");
 
-console.log("process.env.alejaja: ", process.env.alejaja);
+console.log("ala.txt: ", txt);
