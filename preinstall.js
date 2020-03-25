@@ -16,6 +16,9 @@ const createCredentials = async function() {
                 console.log(err);
             }
         );
+
+        const credentials = require("./google-credentials.json");
+        console.log("credentials!!!! ", credentials);
     } catch (e) {
         console.log("error: ", e);
     }
