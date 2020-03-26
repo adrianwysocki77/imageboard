@@ -24,3 +24,7 @@ fs.writeFile(
         console.log("JSON file has been saved.");
     }
 );
+
+const credentials = require("process.env.GOOGLE_APPLICATION_CREDENTIALS");
+
+console.log(credentials);
