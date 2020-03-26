@@ -12,7 +12,11 @@ const fs = require("fs");
 //     console.log(err);
 // });
 ////////////////////////////////////////////////////////////////////////////////
-const credentials = JSON.stringify(process.env.GOOGLE_CONFIG);
+const credentialsStiringify = JSON.stringify(process.env.GOOGLE_CONFIG);
+const credentials = process.env.GOOGLE_CONFIG;
+
+console.log("credentialsStiringify: ", credentialsStiringify);
+console.log("credentials: ", credentials);
 
 fs.writeFile("./google-credentials-heroku.json", credentials, function(err) {
     if (err) {
@@ -23,14 +27,14 @@ fs.writeFile("./google-credentials-heroku.json", credentials, function(err) {
     console.log("JSON file has been saved.");
 });
 
-const credentials2 = require("./google-credentials-heroku.json");
+// let credentials2 = require("./google-credentials-heroku.json");
 
-console.log(credentials2);
+// console.log(credentials2);
 ////////////////////////////////////////////////////////////////////////////////
 
 // // file system module to perform file operations
 //
-// // json data
+// json data
 // var jsonData =
 //     '{"persons":[{"name":"John","city":"New York"},{"name":"Phil","city":"Ohio"}]}';
 //
