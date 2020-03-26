@@ -25,6 +25,6 @@ fs.writeFile(
     }
 );
 
-const credentials = require("process.env.GOOGLE_APPLICATION_CREDENTIALS");
+const credentials = require("./process.env.GOOGLE_APPLICATION_CREDENTIALS");
 
 console.log(credentials);
