@@ -12,7 +12,7 @@ console.log("credentialsFromEnv", credentialsFromEnv);
 
 let credentials = require(credentialsFromEnv);
 
-console.log(credentials);
+console.log("credentials in js!!!", credentials);
 
 // let credentials = require("./google-credentials-heroku.json");
 //
