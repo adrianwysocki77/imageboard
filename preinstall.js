@@ -23,6 +23,6 @@ fs.writeFile("google-credentials-heroku.json", credentials, function(err) {
     console.log("JSON file has been saved.");
 });
 
-// const credentials = require("./google-credentials-heroku.json");
-//
-// console.log(credentials);
+const credentials2 = require("./google-credentials-heroku.json");
+
+console.log(credentials2);
