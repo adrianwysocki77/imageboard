@@ -6,6 +6,10 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
+let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
+console.log("credentialsFromEnv", credentialsFromEnv);
+
 // let credentials = require("./google-credentials-heroku.json");
 //
 // console.log("credentials:  ", credentials);
