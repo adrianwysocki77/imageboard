@@ -27,9 +27,11 @@ fs.writeFile("./google-credentials-heroku.json", credentials, function(err) {
     console.log("JSON file has been saved.");
 });
 
-// let credentials2 = require("./google-credentials-heroku.json");
+setTimeout(function() {
+    let credentials2 = require("./google-credentials-heroku.json");
+    console.log(credentials2);
+}, 2000);
 
-// console.log(credentials2);
 ////////////////////////////////////////////////////////////////////////////////
 
 // // file system module to perform file operations
