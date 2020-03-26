@@ -6,14 +6,6 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
-let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-
-console.log("credentialsFromEnv", credentialsFromEnv);
-
-let credentials = require(credentialsFromEnv);
-
-console.log("credentials in js!!!", credentials);
-
 // let credentials = require("./google-credentials-heroku.json");
 //
 // console.log("credentials:  ", credentials);
@@ -291,6 +283,15 @@ app.use(express.json());
 
 app.get("/images", (req, res) => {
     console.log("**************************************GET/images");
+
+    let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
+    console.log("credentialsFromEnv", credentialsFromEnv);
+
+    let credentials = require(credentialsFromEnv);
+
+    console.log("credentials in js!!!", credentials);
+
     db.getAll()
         .then(result => {
             // console.log("result.rows!!!!!!!!: ", result.rows);
