@@ -219,13 +219,13 @@ const googleVision = async function(url) {
         if (process.env.NODE_ENV === "production") {
             // console.log("in production");
             client = await new vision.ImageAnnotatorClient({
-                keyFilename: "google-credentials-heroku.json"
+                keyFilename: "./google-credentials-heroku.json"
                 // keyFilename: "google-credentials.json"
                 // keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
             });
         } else {
             client = await new vision.ImageAnnotatorClient({
-                keyFilename: "google-credentials.json"
+                keyFilename: "./google-credentials.json"
             });
         }
 
