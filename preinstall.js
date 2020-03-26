@@ -12,19 +12,17 @@ const fs = require("fs");
 //     console.log(err);
 // });
 
-fs.writeFile(
-    "google-credentials-heroku.json",
-    JSON.stringify(process.env.GOOGLE_CONFIG),
-    function(err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
-        }
+const credentials = JSON.stringify(process.env.GOOGLE_CONFIG);
 
-        console.log("JSON file has been saved.");
+fs.writeFile("google-credentials-heroku.json", credentials, function(err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
     }
-);
 
-const credentials = require("./google-credentials-heroku.json");
+    console.log("JSON file has been saved.");
+});
 
-console.log(credentials);
+// const credentials = require("./google-credentials-heroku.json");
+//
+// console.log(credentials);
