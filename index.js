@@ -6,6 +6,10 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
+let credentials = require("./google-credentials-heroku.json");
+
+console.log("credentials:  ", credentials);
+
 // fs.writeFile("mynewfile3.txt", "aaa", function(err) {
 //     if (err) throw err;
 //     console.log("Saved!");
