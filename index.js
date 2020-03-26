@@ -6,9 +6,9 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
-let credentials = require("./google-credentials-heroku.json");
-
-console.log("credentials:  ", credentials);
+// let credentials = require("./google-credentials-heroku.json");
+//
+// console.log("credentials:  ", credentials);
 
 // fs.writeFile("mynewfile3.txt", "aaa", function(err) {
 //     if (err) throw err;
@@ -208,7 +208,7 @@ const allFruits = arrFruitsLower.split("\n");
 const googleVision = async function(url) {
     try {
         // Imports the Google Cloud client library
-        const vision = require("@google-cloud/vision");
+        const vision = await require("@google-cloud/vision");
         // Creates a client
 
         // const client = new vision.ImageAnnotatorClient({
@@ -218,12 +218,12 @@ const googleVision = async function(url) {
         let client;
         if (process.env.NODE_ENV === "production") {
             // console.log("in production");
-            client = new vision.ImageAnnotatorClient({
+            client = await new vision.ImageAnnotatorClient({
                 keyFilename: "google-credentials-heroku.json"
                 // keyFilename: "google-credentials.json"
             });
         } else {
-            client = new vision.ImageAnnotatorClient({
+            client = await new vision.ImageAnnotatorClient({
                 keyFilename: "google-credentials.json"
             });
         }
@@ -248,6 +248,7 @@ const googleVision = async function(url) {
         console.log("fruits: ", fruits);
         return fruits;
     } catch (e) {
+        console.log("err in googleVision!!!");
         console.log("error: ", e);
     }
 };
