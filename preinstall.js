@@ -18,18 +18,14 @@ const credentials = process.env.GOOGLE_CONFIG;
 console.log("credentialsStiringify: ", credentialsStiringify);
 console.log("credentials: ", credentials);
 
-fs.writeFile(
-    "./google-credentials-heroku.json",
-    credentialsStiringify,
-    function(err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
-        }
-
-        console.log("JSON file has been saved.");
+fs.writeFile("./google-credentials-heroku.json", credentials, function(err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
     }
-);
+
+    console.log("JSON file has been saved.");
+});
 
 setTimeout(function() {
     let credentials2 = require("./google-credentials-heroku.json");
