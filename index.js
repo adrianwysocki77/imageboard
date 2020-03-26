@@ -6,6 +6,14 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
+// fs.writeFile("mynewfile3.txt", "aaa", function(err) {
+//     if (err) throw err;
+//     console.log("Saved!");
+// });
+//
+// let newFile = require("./mynewFile3.json");
+// console.log(newFile.a);
+
 app.use(express.static("./public"));
 /////////////////////////////////////////////////////////////////////////////
 // COOKIES
@@ -206,8 +214,8 @@ const googleVision = async function(url) {
         if (process.env.NODE_ENV === "production") {
             // console.log("in production");
             client = new vision.ImageAnnotatorClient({
-                // keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
-                keyFilename: "google-credentials.json"
+                keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+                // keyFilename: "google-credentials.json"
             });
         } else {
             client = new vision.ImageAnnotatorClient({

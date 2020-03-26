@@ -19,3 +19,8 @@
 // let txt = require("./ala.txt");
 //
 // console.log("ala.txt: ", txt);
+
+console.log(
+    "process.env.GOOGLE_APPLICATION_CREDENTIALS: ",
+    process.env.GOOGLE_APPLICATION_CREDENTIALS
+);
