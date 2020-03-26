@@ -10,6 +10,10 @@ let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 console.log("credentialsFromEnv", credentialsFromEnv);
 
+let credentials = require(credentialsFromEnv);
+
+console.log(credentials);
+
 // let credentials = require("./google-credentials-heroku.json");
 //
 // console.log("credentials:  ", credentials);
