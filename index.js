@@ -221,6 +221,7 @@ const googleVision = async function(url) {
             client = await new vision.ImageAnnotatorClient({
                 keyFilename: "google-credentials-heroku.json"
                 // keyFilename: "google-credentials.json"
+                // keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
             });
         } else {
             client = await new vision.ImageAnnotatorClient({
