@@ -206,27 +206,12 @@
                         </div>
                         <div>
                         </div>
-                        <div class="comments">
-                            <div class="commentstext">Comments</div>
 
-                            <div class="comments-div" id="comments-div">
-                                <div class="single-comment" v-for="c in comments">
-
-                                    <div class="text">
-                                        <div class="username">
-                                            {{c.username}}
-                                        </div>
-                                        {{c.comment}}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                         <div class="addcomment">
                                 <form class="formdiv">
-                                    <div v-if="empty_comment" class="nofruit">
+                                    <div v-if="empty_comment" class="emptycomment">
                                         <div class="one">
-                                            No fruit on the picture!!!
+                                            Empty comment!!!
                                         </div>
                                         <div class="canceldiv">
                                             <img src="cancel.svg" class="cancel" @click='closeEmptyComment'>
@@ -244,6 +229,24 @@
 
                                 </form>
                         </div>
+
+                        <div class="comments">
+                            <div class="commentstext">Comments</div>
+
+                            <div class="comments-div" id="comments-div">
+                                <div class="single-comment" v-for="c in comments">
+
+                                    <div class="text">
+                                        <div class="username">
+                                            {{c.username}}
+                                        </div>
+                                        {{c.comment}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
             </div>

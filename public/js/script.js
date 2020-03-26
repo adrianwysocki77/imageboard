@@ -130,22 +130,22 @@
                             username: this.usernameComment
                         })
                         .then(function(res) {
-                            vueInstance.comments.push(res.data[0]);
+                            vueInstance.comments.unshift(res.data[0]);
                             vueInstance.comment = "";
 
-                            setTimeout(
-                                function() {
-                                    let comments = document.getElementById(
-                                        "comments-div"
-                                    );
-
-                                    comments.scrollTop =
-                                        comments.scrollHeight -
-                                        comments.clientHeight;
-                                },
-
-                                200
-                            );
+                            // setTimeout(
+                            //     function() {
+                            //         let comments = document.getElementById(
+                            //             "comments-div"
+                            //         );
+                            //
+                            //         comments.scrollTop =
+                            //             comments.scrollHeight -
+                            //             comments.clientHeight;
+                            //     },
+                            //
+                            //     200
+                            // );
                         })
                         .catch(function(err) {
                             console.log("err in axios POST/comment: ", err);

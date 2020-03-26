@@ -47,7 +47,8 @@ exports.selectAllComments = function(imageId) {
     return db
         .query(
             `SELECT * FROM comments
-        WHERE image_id=$1`,
+        WHERE image_id=$1
+        ORDER BY id DESC`,
             [imageId]
         )
         .then(({ rows }) => rows);
