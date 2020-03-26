@@ -8,19 +8,19 @@ const fs = require("fs");
 //     }
 // );
 
-fs.writeFile("./ala.txt", process.env.GOOGLE_CONFIG, err => {
-    console.log(err);
-});
-//
-// process.env.alejaja = {
-//     alejaja: "alejaja"
-// };
-//
-// let txt = require("./ala.txt");
-//
-// console.log("ala.txt: ", txt);
+// fs.writeFile("./ala.txt", process.env.GOOGLE_APPLICATION_CREDENTIALS, err => {
+//     console.log(err);
+// });
 
-console.log(
-    "process.env.GOOGLE_APPLICATION_CREDENTIALS: ",
-    process.env.GOOGLE_APPLICATION_CREDENTIALS
+fs.writeFile(
+    "process.env.GOOGLE_APPLICATION_CREDENTIALS",
+    JSON.stringify(process.env.GOOGLE_CONFIG),
+    function(err) {
+        if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+        }
+
+        console.log("JSON file has been saved.");
+    }
 );
