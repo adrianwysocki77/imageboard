@@ -373,7 +373,7 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 2px solid green; */
+    border: 2px solid green;
 }
 
 .testdiv {
@@ -391,7 +391,7 @@ input {
 
 .imginselected {
     display: flex;
-    /* border: 2px solid pink; */
+    border: 2px solid purple;
     /* width: 90%; */
     /* height: 90%; */
 
@@ -404,7 +404,7 @@ input {
 .other {
     grid-area: other;
     background: white;
-    /* border: 2px solid pink; */
+    border: 2px solid yellow;
     /* display: flex;
     flex-direction: column; */
     /* min-height: 3000px; */
@@ -418,7 +418,7 @@ input {
 .title {
     font-size: 25px;
     /* border-bottom: 2px solid #dedfe0; */
-    /* border-bottom: 2px solid pink; */
+    border-bottom: 2px solid green;
 
     padding-left: 20px;
     padding-right: 20px;
@@ -435,7 +435,7 @@ input {
     text-align: center;
 }
 .description {
-    /* border: 1px solid black; */
+    border: 1px solid black;
     font-size: 16px;
     padding-left: 20px;
     padding-right: 20px;
@@ -446,7 +446,7 @@ input {
     width: 12px;
 }
 .author {
-    /* border: 1px solid black; */
+    border: 1px solid blue;
     height: 40px;
     /* padding-left: 25px; */
     color: #a9a9a9;
@@ -464,7 +464,7 @@ input {
     text-align: center;
 }
 .comments {
-    /* border: 1px solid blue; */
+    border: 1px solid green;
     min-height: 150px;
     /* overflow-y: scroll; */
     margin-top: 10px;
@@ -481,11 +481,11 @@ input {
     width: 100%;
     /* height: 140px; */
     /* overflow-y: scroll; */
-    /* border: 2px solid pink; */
+    border: 2px solid pink;
 }
 
 .commentstext {
-    /* border: 2px solid red; */
+    border: 2px solid red;
     display: flex;
     justify-content: center;
     margin-bottom: 12px;
@@ -981,14 +981,13 @@ input {
 /* //////////////////////////////////////////////////////////////////////////////// */
 /* ADMIN ROUTE */
 
-.hidden {
+/* .hidden {
     visibility: hidden;
 }
 
 .delete {
     display: flex;
     width: 100%;
-    /* border: 2px solid pink; */
     align-content: flex-end;
     justify-content: flex-end;
     padding-right: 5px;
@@ -997,4 +996,4 @@ input {
 
 .trash {
     width: 20px;
-}
+} */
