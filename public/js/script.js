@@ -133,19 +133,19 @@
                             vueInstance.comments.unshift(res.data[0]);
                             vueInstance.comment = "";
 
-                            // setTimeout(
-                            //     function() {
-                            //         let comments = document.getElementById(
-                            //             "comments-div"
-                            //         );
-                            //
-                            //         comments.scrollTop =
-                            //             comments.scrollHeight -
-                            //             comments.clientHeight;
-                            //     },
-                            //
-                            //     200
-                            // );
+                            setTimeout(
+                                function() {
+                                    let comments = document.getElementById(
+                                        "comments-div"
+                                    );
+
+                                    comments.scrollTop =
+                                        comments.scrollHeight -
+                                        comments.clientHeight;
+                                },
+
+                                200
+                            );
                         })
                         .catch(function(err) {
                             console.log("err in axios POST/comment: ", err);
@@ -181,28 +181,34 @@
                                 .slice(0, 18)
                                 .replace("T", " ");
 
-                            setTimeout(
-                                function() {
-                                    let comments = document.getElementById(
-                                        "comments-div"
-                                    );
-
-                                    comments.scrollTop =
-                                        comments.scrollHeight -
-                                        comments.clientHeight;
-                                },
-
-                                200
-                            );
+                            // setTimeout(
+                            //     function() {
+                            //         let comments = document.getElementById(
+                            //             "comments-div"
+                            //         );
+                            //
+                            //         comments.scrollTop =
+                            //             comments.scrollHeight -
+                            //             comments.clientHeight;
+                            //     },
+                            //
+                            //     200
+                            // );
 
                             // console.log(
                             //     "res from acios /selectedimage: ",
                             //     res.data[3][0].admin
                             // );
 
-                            if (res.data[3][0].admin == true) {
-                                console.log("add class");
-                            }
+                            console.log("res from axios: ", res.data);
+
+                            // if (res.data[3][0].admin == true) {
+                            //     console.log("add class");
+                            //
+                            //     var element = document.getElementById("delete");
+                            //     element.classList.remove("hidden");
+                            // }
+
                             // comments.scrollHeight - comments.clientHeight;
 
                             // console.log(
@@ -305,12 +311,13 @@
             axios.get("/images").then(function(res) {
                 console.log("**************************axios.get/images");
 
-                if (!res.data[res.data.length - 1].id == undefined) {
-                    var lastId = res.data[res.data.length - 1].id;
-                }
+                // if (!res.data[res.data.length - 1].id == undefined) {
+                var lastId = res.data[res.data.length - 1].id;
+                // }
                 console.log("IMAGES: ", vueInstance.images);
                 // console.log("lastId: ", lastId);
                 vueInstance.lastId = lastId;
+                console.log("last id", lastId);
                 vueInstance.images = res.data;
             });
         },

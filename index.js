@@ -41,16 +41,31 @@ app.use(
 const basicAuth = require("basic-auth");
 
 const auth = function(req, res, next) {
-    console.log("secrets.adi: ", secrets.adi);
-    console.log("secrets.adipass: ", secrets.adipass);
+    // console.log("secrets.adi: ", secrets.adi);
+    // console.log("secrets.adipass: ", secrets.adipass);
 
     const creds = basicAuth(req);
 
     function checkCred(creds) {
-        let trueCreds =
-            !creds ||
-            creds.name != secrets.adi ||
-            creds.pass != secrets.adipass;
+        let trueCreds;
+        // =
+        // !creds ||
+        // (creds.name != secrets.adi || creds.pass != secrets.adipass);
+
+        console.log("trueCred: ", trueCreds);
+
+        if (!creds) {
+            trueCreds = true;
+        } else if (creds.name == secrets.adi || creds.pass == secrets.adipass) {
+            trueCreds = false;
+        } else if (
+            creds.name == secrets.maks ||
+            creds.makspass == secrets.makspass
+        ) {
+            trueCreds = false;
+        } else {
+            trueCreds = true;
+        }
 
         return trueCreds;
     }
@@ -62,10 +77,13 @@ const auth = function(req, res, next) {
         );
         res.sendStatus(401);
     } else {
+        console.log("creds.name: ", creds.name);
+        console.log("creds.pass: ", creds.pass);
+
         if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
             req.session.admin = true;
+            console.log("req.session.admin: ", req.session.admin);
         }
-        console.log("req.session.admin: ", req.session.admin);
         next();
     }
 };
@@ -407,12 +425,13 @@ app.get("/selectedimage/:id", (req, res) => {
     console.log("id: ", req.params.id);
 
     let admin = req.session.admin;
-
+    console.log("admin: ", admin);
     Promise.all([
         db.selectImage(req.params.id),
         db.selectAllComments(req.params.id),
-        db.selectAllTags(req.params.id),
-        [{ admin: admin }]
+        db.selectAllTags(req.params.id)
+        // ,
+        // [{ admin: admin }]
     ])
         .then(data => {
             // console.log("picture: ", data);

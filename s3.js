@@ -1,6 +1,7 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
 const sharp = require("sharp");
+
 let secrets;
 
 if (process.env.NODE_ENV == "production") {
@@ -19,9 +20,6 @@ exports.upload = (req, res, next) => {
         console.log(`req.file ain't there`);
         return res.sendStatus(500);
     }
-
-    const { filename, mimetype, path, size } = req.file;
-    // let image;
 
     // fs.readFile("./uploads/fruit.jpg", function(err, data) {
     //     if (err) throw err;
@@ -67,6 +65,11 @@ exports.upload = (req, res, next) => {
     // console.log("fileSizeInBytes: ", fileSizeInBytes);
     //
     // console.log("req.file: ", req.file);
+    ///////////////////////////////////////////////////////////////////////////////
+    //Stary s3
+    const { filename, mimetype, path, size, originalname } = req.file;
+
+    console.log("orginalname: ", originalname);
 
     s3.putObject({
         Bucket: "spicedling",
@@ -87,6 +90,8 @@ exports.upload = (req, res, next) => {
             res.sendStatus(500);
         });
 };
+/////////////////////////////////////////////////////////////////////////////////
+//Nowy s3
 
 // /////////////////////////////////////////////////////////////////////////////////
 // //FIRST BAD COMPRESSOR
