@@ -867,14 +867,14 @@ input {
 
     .comments {
         min-height: 100px;
-        /* border: 2px solid pink; */
+        border: 2px solid pink;
         display: flex;
         flex-direction: column;
     }
 
     .comments-div {
-        min-height: 100px;
-        /* border: 2px solid blue; */
+        min-height: 10px;
+        border: 2px solid blue;
         display: flex;
         /* overflow: visible; */
     }
