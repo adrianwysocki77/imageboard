@@ -915,8 +915,12 @@ input {
     }
 
     .picture {
-        height: 470px;
+        height: 370px;
         /* overflow: hidden; */
+    }
+
+    .other {
+        height: 300px;
     }
 
     .close {
