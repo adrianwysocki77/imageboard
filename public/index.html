@@ -89,7 +89,7 @@
                 No fruit on the picture!!!
             </div>
             <div class="canceldiv">
-                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit' id="delete">
+                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
             </div>
         </div>
 
@@ -195,9 +195,9 @@
                     <div class="other">
                         <!-- <div class="testdiv"></div> -->
 
-                        <!-- <div class="delete">
-                            <img src="bin.svg" class="trash hidden">
-                        </div> -->
+                        <div id="deletepic" class="deletepic hidden">
+                            <img src="bin.svg" class="trash" @click="deleteImage">
+                        </div>
 
                         <div class="title">
                             {{title}}

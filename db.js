@@ -106,3 +106,30 @@ exports.getImagesByTags = function(tag) {
         )
         .then(({ rows }) => rows);
 };
+/////////////////////////////////////////////////////////////////////////////
+// ADMIN
+
+exports.deleteTags = function(image_id) {
+    return db.query(
+        `DELETE FROM tags
+        WHERE image_id = $1`,
+        [image_id]
+    );
+};
+
+exports.deleteComments = function(image_id) {
+    return db.query(
+        `DELETE FROM comments
+        WHERE image_id = $1`,
+        [image_id]
+    );
+};
+
+exports.deleteImage = function(image_id) {
+    return db.query(
+        `DELETE FROM images
+        WHERE id = $1`,
+        [image_id]
+    );
+};
+////////////////////////////////////////////////////////////////////////////////

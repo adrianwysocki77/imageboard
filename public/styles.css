@@ -277,6 +277,8 @@ input {
     height: 25px;
     background-color: white;
     margin-bottom: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 /* //////////////////////////////////////////////////////////////////////////////// */
@@ -373,7 +375,7 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid green;
+    /* border: 2px solid green; */
 }
 
 .testdiv {
@@ -391,7 +393,7 @@ input {
 
 .imginselected {
     display: flex;
-    border: 2px solid purple;
+    /* border: 2px solid purple; */
     /* width: 90%; */
     /* height: 90%; */
 
@@ -404,12 +406,13 @@ input {
 .other {
     grid-area: other;
     background: white;
-    border: 2px solid yellow;
+    /* border: 2px solid yellow; */
     /* display: flex;
     flex-direction: column; */
     /* min-height: 3000px; */
     /* align-items: center; */
     overflow-y: scroll;
+    position: relative;
 }
 
 .line {
@@ -418,7 +421,7 @@ input {
 .title {
     font-size: 25px;
     /* border-bottom: 2px solid #dedfe0; */
-    border-bottom: 2px solid green;
+    /* border-bottom: 2px solid green; */
 
     padding-left: 20px;
     padding-right: 20px;
@@ -431,11 +434,11 @@ input {
     align-items: center;
     /* width: 80%; */
     /* margin-bottom: 10px; */
-    margin-top: 10px;
+    /* margin-top: 10px; */
     text-align: center;
 }
 .description {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     font-size: 16px;
     padding-left: 20px;
     padding-right: 20px;
@@ -446,25 +449,25 @@ input {
     width: 12px;
 }
 .author {
-    border: 1px solid blue;
-    height: 40px;
+    /* border: 1px solid blue; */
+    height: 20px;
     /* padding-left: 25px; */
     color: #a9a9a9;
     font-size: 13px;
-    margin-left: 15px;
+    margin-left: 25px;
     margin-right: 15px;
     margin-top: 10px;
     /* margin-bottom: 10px; */
     /* border-top: 1px solid #dcdcdc; */
-    border-bottom: 1px solid #dcdcdc;
+    /* border-bottom: 1px solid #dcdcdc; */
     /* padding-bottom: 15px; */
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
 }
 .comments {
-    border: 1px solid green;
+    /* border: 1px solid green; */
     min-height: 150px;
     /* overflow-y: scroll; */
     margin-top: 10px;
@@ -481,11 +484,11 @@ input {
     width: 100%;
     /* height: 140px; */
     /* overflow-y: scroll; */
-    border: 2px solid pink;
+    /* border: 2px solid pink; */
 }
 
 .commentstext {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     display: flex;
     justify-content: center;
     margin-bottom: 12px;
@@ -884,6 +887,10 @@ input {
         /* padding-bottom: 10px; */
     }
 
+    /* .other {
+        min-height: 500px;
+    } */
+
     .comments {
         min-height: 100px;
         /* border: 2px solid pink; */
@@ -908,7 +915,7 @@ input {
     }
 
     .picture {
-        height: 370px;
+        height: 470px;
         /* overflow: hidden; */
     }
 
@@ -981,19 +988,20 @@ input {
 /* //////////////////////////////////////////////////////////////////////////////// */
 /* ADMIN ROUTE */
 
-/* .hidden {
+.hidden {
     visibility: hidden;
 }
 
-.delete {
+.deletepic {
     display: flex;
     width: 100%;
     align-content: flex-end;
     justify-content: flex-end;
     padding-right: 5px;
     padding-top: 5px;
+    position: absolute;
 }
 
 .trash {
     width: 20px;
-} */
+}

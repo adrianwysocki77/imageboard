@@ -200,14 +200,17 @@
                             //     res.data[3][0].admin
                             // );
 
-                            console.log("res from axios: ", res.data);
-
-                            // if (res.data[3][0].admin == true) {
-                            //     console.log("add class");
+                            // console.log("res from axios: ", res.data);
                             //
-                            //     var element = document.getElementById("delete");
-                            //     element.classList.remove("hidden");
-                            // }
+                            if (res.data[3][0].admin == true) {
+                                console.log("add class");
+
+                                var element = document.getElementById(
+                                    "deletepic"
+                                );
+                                console.log("delete: ", element);
+                                element.classList.remove("hidden");
+                            }
 
                             // comments.scrollHeight - comments.clientHeight;
 
@@ -278,6 +281,34 @@
             closeEmptyComment: function() {
                 console.log("closeEmptyComment clicked!!!!!");
                 this.empty_comment = null;
+            },
+            deleteImage: function() {
+                console.log("deleteImage clicked!!!!!");
+                console.log("id of deleted imagge: ", this.id);
+                console.log("biggerId: ", this.biggerId);
+                console.log("smallerId: ", this.smallerId);
+                if (this.biggerId == null) {
+                    location.hash = "#" + this.smallerId;
+                } else if (this.smallerId == null) {
+                    location.hash = "#" + this.biggerId;
+                } else if (this.id == undefined) {
+                    // location.hash = "#" + this.biggerId;
+                    console.log("id == undefined?!!!", this.id);
+                } else {
+                    location.hash = "#" + this.biggerId;
+                }
+
+                window.location.reload();
+
+                axios
+                    .get("/delete/" + this.id)
+                    .then(function(res) {
+                        console.log("************************axios /delete");
+                        console.log("res.data: ", res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
         }
     });

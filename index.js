@@ -6,17 +6,6 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets; // in dev they are in secrets.json which is listed in .gitignore
 
-// let credentials = require("./google-credentials-heroku.json");
-//
-// console.log("credentials:  ", credentials);
-
-// fs.writeFile("mynewfile3.txt", "aaa", function(err) {
-//     if (err) throw err;
-//     console.log("Saved!");
-// });
-//
-// let newFile = require("./mynewFile3.json");
-// console.log(newFile.a);
 ///////////////////////////////////////////////////////////////////////////////
 
 app.use(express.static("./public"));
@@ -39,11 +28,9 @@ app.use(
 ///////////////////////////////////////////////////////////////////////////////
 //BASIC AUTH
 const basicAuth = require("basic-auth");
-
 const auth = function(req, res, next) {
     // console.log("secrets.adi: ", secrets.adi);
     // console.log("secrets.adipass: ", secrets.adipass);
-
     const creds = basicAuth(req);
 
     function checkCred(creds) {
@@ -51,13 +38,15 @@ const auth = function(req, res, next) {
         // =
         // !creds ||
         // (creds.name != secrets.adi || creds.pass != secrets.adipass);
-
-        console.log("trueCred: ", trueCreds);
+        // console.log("******************************************checkCred");
+        // console.log("trueCred: ", trueCreds);
 
         if (!creds) {
             trueCreds = true;
+            req.session.admin = false;
         } else if (creds.name == secrets.adi || creds.pass == secrets.adipass) {
             trueCreds = false;
+            req.session.admin = true;
         } else if (
             creds.name == secrets.maks ||
             creds.makspass == secrets.makspass
@@ -77,19 +66,18 @@ const auth = function(req, res, next) {
         );
         res.sendStatus(401);
     } else {
-        console.log("creds.name: ", creds.name);
-        console.log("creds.pass: ", creds.pass);
+        // console.log("creds.name: ", creds.name);
+        // console.log("creds.pass: ", creds.pass);
 
-        if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
-            req.session.admin = true;
-            console.log("req.session.admin: ", req.session.admin);
-        }
+        // if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
+        // req.session.admin = true;
+        // console.log("req.session.admin: ", req.session.admin);
+        // }
         next();
     }
 };
 
 app.use(auth);
-
 ///////////////////////////////////////////////////////////////////////////////
 // ALL FRESH FRUITS!!!
 const arrFruits = `Açaí
@@ -429,9 +417,8 @@ app.get("/selectedimage/:id", (req, res) => {
     Promise.all([
         db.selectImage(req.params.id),
         db.selectAllComments(req.params.id),
-        db.selectAllTags(req.params.id)
-        // ,
-        // [{ admin: admin }]
+        db.selectAllTags(req.params.id),
+        [{ admin: admin }]
     ])
         .then(data => {
             // console.log("picture: ", data);
@@ -484,6 +471,25 @@ app.get("/showmore/:lastId", (req, res) => {
         // console.log("result[0].lastId from showMore: ", result[0].lowestId);
         res.json(result);
     });
+});
+
+app.get("/delete/:imageId", (req, res) => {
+    console.log("**************************************GET/delete/:imageId");
+    var imageId = req.params.imageId;
+
+    Promise.all([
+        db.deleteTags(imageId),
+        db.deleteComments(imageId),
+        db.deleteImage(imageId)
+    ])
+        .then(data => {
+            res.json({
+                delete: "success"
+            });
+        })
+        .catch(err => {
+            console.log("err in deleteImage: ", err);
+        });
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`I'm listening.`));
