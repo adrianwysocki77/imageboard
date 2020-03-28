@@ -395,8 +395,6 @@ input {
     position: relative;
 }
 /* //////////////////////////////////////////////////////////////////////////////// */
-.line {
-}
 
 .title {
     font-size: 25px;
@@ -857,13 +855,9 @@ input {
         min-height: 92%; */
     }
 
-    /* .picture {
-        height: 370px;
-    }
-
     .other {
-        min-height: 100%;
-    } */
+        border: 2px solid blue;
+    }
 
     .comments {
         min-height: 100px;
