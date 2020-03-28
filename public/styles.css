@@ -857,6 +857,8 @@ input {
 
     .other {
         border: 2px solid blue;
+        display: flex;
+        flex-direction: column;
     }
 
     .comments {
