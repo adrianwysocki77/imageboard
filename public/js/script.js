@@ -130,6 +130,16 @@
                             username: this.usernameComment
                         })
                         .then(function(res) {
+                            // console.log(
+                            //     "res.data[0]: ",
+                            //     res.data[0].created_at
+                            //         .slice(0, 18)
+                            //         .replace("T", " ")
+                            // );
+                            res.data[0].created_at = res.data[0].created_at
+                                .slice(0, 18)
+                                .replace("T", " ");
+
                             vueInstance.comments.unshift(res.data[0]);
                             vueInstance.comment = "";
 
@@ -191,6 +201,7 @@
                                 ].created_at
                                     .slice(0, 18)
                                     .replace("T", " ");
+                                console.log("Im editing image!!!");
                             }
 
                             vueInstance.smallerId = res.data[0][0].smallerId;
