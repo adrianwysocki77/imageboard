@@ -97,14 +97,14 @@
             </div>
         </div>
 
-        <div v-if="wrongFormat" class="nofruit">
+        <!-- <div v-if="wrongFormat" class="nofruit">
             <div class="one">
                 Only accepted format of the picture is jpg!!!
             </div>
             <div class="canceldiv">
                 <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
             </div>
-        </div>
+        </div> -->
         <div v-if="emptyFields" class="nofruit">
             <div class="one">
                 Empty fields!!!
@@ -239,7 +239,7 @@
                                         </textarea>
                                     </div>
                                     <div class="submitcomment">
-                                        <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="selectedinput">
+                                        <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="commentuserinput">
                                         <button @click='addComment' class="submit">submit</button>
                                     </div>
 

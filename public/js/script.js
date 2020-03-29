@@ -326,7 +326,7 @@
             tags: "",
             tag: null,
             noFruit: null,
-            wrongFormat: null,
+            // wrongFormat: null,
             emptyFields: null
         },
         created: function() {
@@ -399,6 +399,7 @@
                     console.log(this.tags);
 
                     this.emptyFields = true;
+                    this.noFruit = null;
                     inputs[0].classList.remove("hidden");
                     uploading[0].classList.add("hidden");
 
@@ -451,7 +452,7 @@
                                 uploading[0].classList.add("hidden");
                             })
                             .catch(function(err) {
-                                vueInstance.wrongFormat = true;
+                                // vueInstance.wrongFormat = true;
                                 console.log("err in POST /upload: ", err);
                             });
                     }
