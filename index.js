@@ -393,6 +393,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                         console.log("error in addImage: ", err);
                     });
             } else {
+                console.log("no fruit");
                 res.json({
                     success: false
                 });

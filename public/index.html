@@ -58,6 +58,10 @@
         </div>
 
         <div class="form">
+            <div class="uploading hidden">
+                Uploading...
+            </div>
+
             <form>
                 <div class="inputs">
                     <div class="flexinput">
@@ -96,6 +100,14 @@
         <div v-if="wrongFormat" class="nofruit">
             <div class="one">
                 Only accepted format of the picture is jpg!!!
+            </div>
+            <div class="canceldiv">
+                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
+            </div>
+        </div>
+        <div v-if="emptyFields" class="nofruit">
+            <div class="one">
+                Empty fields!!!
             </div>
             <div class="canceldiv">
                 <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>

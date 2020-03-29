@@ -326,7 +326,8 @@
             tags: null,
             tag: null,
             noFruit: null,
-            wrongFormat: null
+            wrongFormat: null,
+            emptyFields: null
         },
         created: function() {
             console.log("created");
@@ -357,37 +358,91 @@
             handleClick: function(e) {
                 e.preventDefault();
                 console.log("in upload");
-                this.closeNoMoreFruit();
-                console.log("this: ", this);
-                //by wyslac cos do servera musze zrobic to:
-                var formData = new FormData();
-                console.log("this.file.size", this.file.size);
-                formData.append("title", this.title);
-                formData.append("description", this.description);
-                formData.append("username", this.username);
-                formData.append("file", this.file);
-                formData.append("tags", this.tags);
+                let icons = document.getElementsByClassName("icon");
+                let inputs = document.getElementsByClassName("inputs");
+                let uploading = document.getElementsByClassName("uploading");
 
-                console.log("this z upload picture: ", this.file);
-                //                console.log("formData: ", formData); // to jest pusty obj nic szegolnego
+                inputs[0].classList.add("hidden");
+                uploading[0].classList.remove("hidden");
 
-                var vueInstance = this;
-                axios
-                    .post("/upload", formData)
-                    .then(function(resp) {
-                        console.log("resp.data.success", resp.data.success);
+                console.log("form", inputs);
+                // console.log("icon: ", elements);
 
-                        if (resp.data.success == false) {
-                            console.log("Sorry, no fruit no upload");
-                            vueInstance.noFruit = true;
-                        } else {
-                            vueInstance.images.unshift(resp.data[0]);
-                        }
-                    })
-                    .catch(function(err) {
-                        vueInstance.wrongFormat = true;
-                        console.log("err in POST /upload: ", err);
-                    });
+                for (let i = 0; i < icons.length; i++) {
+                    icons[i].classList.add("rotate");
+                }
+
+                console.log("title", this.title);
+                console.log("description", this.description);
+
+                if (
+                    // this.title == "" ||
+                    // this.title == null ||
+                    // this.description == "" ||
+                    // this.description == null ||
+                    // this.username == "" ||
+                    // this.username == "" null
+                    // this.file == "" ||
+                    // this.file == null ||
+                    // this.tags == "" ||
+                    // this.tags == null
+                    this.title == "" ||
+                    this.description == "" ||
+                    this.username == "" ||
+                    this.file == "" ||
+                    this.tags == ""
+                ) {
+                    this.emptyFields = true;
+                    inputs[0].classList.remove("hidden");
+                    uploading[0].classList.add("hidden");
+
+                    for (let i = 0; i < icons.length; i++) {
+                        icons[i].classList.remove("rotate");
+                    }
+                } else {
+                    this.closeNoMoreFruit();
+                    //by wyslac cos do servera musze zrobic to:
+                    var formData = new FormData();
+                    console.log("this.file.size", this.file.size);
+                    formData.append("title", this.title);
+                    formData.append("description", this.description);
+                    formData.append("username", this.username);
+                    formData.append("file", this.file);
+                    formData.append("tags", this.tags);
+
+                    console.log("this z upload picture: ", this.file);
+                    //console.log("formData: ", formData); // to jest pusty obj nic szegolnego
+
+                    var vueInstance = this;
+                    axios
+                        .post("/upload", formData)
+                        .then(function(resp) {
+                            console.log("resp.data.success", resp.data.success);
+                            // elements.classList.remove("rotate");
+
+                            vueInstance.title = null;
+                            vueInstance.description = null;
+                            vueInstance.file = null;
+                            vueInstance.tags = "";
+                            vueInstance.username = "";
+
+                            if (resp.data.success == false) {
+                                console.log("Sorry, no fruit no upload");
+                                vueInstance.noFruit = true;
+                            } else {
+                                vueInstance.images.unshift(resp.data[0]);
+                            }
+                            for (let i = 0; i < icons.length; i++) {
+                                icons[i].classList.remove("rotate");
+                            }
+                            inputs[0].classList.remove("hidden");
+                            uploading[0].classList.add("hidden");
+                        })
+                        .catch(function(err) {
+                            vueInstance.wrongFormat = true;
+                            console.log("err in POST /upload: ", err);
+                        });
+                }
             },
 
             handleChange: function(e) {
@@ -446,6 +501,7 @@
                 console.log("closeNoMoreFruit clicked!!!!!");
                 this.noFruit = null;
                 this.wrongFormat = null;
+                this.emptyFields = null;
             }
         }
     });
