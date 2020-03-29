@@ -400,6 +400,7 @@ input {
     display: flex;
     opacity: 0;
     transition: 0.5s ease;
+    align-items: center;
 }
 
 .rightarr {
@@ -410,6 +411,7 @@ input {
     justify-content: flex-end;
     opacity: 0;
     transition: 0.5s ease;
+    align-items: center;
 }
 
 .leftarr:hover {
