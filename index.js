@@ -311,9 +311,8 @@ app.get("/images", (req, res) => {
 // to tworzy plik
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("**************************************POST/upload");
-    // console.log("req.wrongFormat: ", res.wrongFormat);
-
     console.log("upload big picture");
+
     const imageUrl = s3Url + req.file.filename;
     const title = req.body.title;
     const description = req.body.description;

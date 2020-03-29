@@ -72,7 +72,7 @@ exports.upload = (req, res, next) => {
     console.log("orginalname: ", originalname);
 
     s3.putObject({
-        Bucket: "spicedling",
+        Bucket: "fruitybucket",
         ACL: "public-read",
         Key: filename,
         Body: fs.createReadStream(path),

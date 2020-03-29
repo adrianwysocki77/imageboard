@@ -173,7 +173,26 @@
                             vueInstance.description =
                                 res.data[0][0].description;
                             vueInstance.url = res.data[0][0].url;
+
                             vueInstance.comments = res.data[1];
+                            console.log(vueInstance.comments);
+                            ////////////////////////////////////////////////////
+                            //EDITING DATE
+
+                            for (
+                                let i = 0;
+                                i < vueInstance.comments.length;
+                                i++
+                            ) {
+                                vueInstance.comments[
+                                    i
+                                ].created_at = vueInstance.comments[
+                                    i
+                                ].created_at
+                                    .slice(0, 18)
+                                    .replace("T", " ");
+                            }
+
                             vueInstance.smallerId = res.data[0][0].smallerId;
                             vueInstance.biggerId = res.data[0][0].biggerId;
                             vueInstance.tags = res.data[2];

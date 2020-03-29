@@ -390,8 +390,8 @@ input {
     grid-template-areas: "leftarr rightarr";
 }
 
-.arrayicon {
-    width: 50%;
+.arrowicon {
+    width: 20%;
 }
 
 .leftarr {
@@ -403,6 +403,7 @@ input {
     align-items: center;
     width: 100%;
     height: 100%;
+    /* visibility: hidden; */
 }
 
 .rightarr {
@@ -416,6 +417,7 @@ input {
     align-items: center;
     width: 100%;
     height: 100%;
+    /* visibility: hidden; */
 }
 
 .leftarr:hover {
