@@ -194,6 +194,7 @@
             </div>
 
                 <div class="container">
+
                     <!-- <div class="newimgdivinselected">
                         <img :src="url" class="imginselected">
                     </div> -->
@@ -201,6 +202,21 @@
                         <img :src="url" class="imginselected" id="imageid">
                     </div> -->
                     <div class="picture">
+                        <div class="arrowscontainer">
+                            <div class="leftarr" v-if="smallerId">
+                                <a :href="'#' + smallerId" class="leftarr">
+                                    <img src="newleft.svg" class="arrayicon">
+                                </a>
+                            </div>
+                            <div class="rightarr" v-if="biggerId">
+                                <a :href="'#' + biggerId" class="rightarr">
+                                    <img src="newright.svg" class="arrayicon">
+                                </a>
+                            </div>
+
+
+
+                        </div>
                         <!-- <div class="testdiv"></div> -->
                         <img :src="url" class="imginselected" id="imageid">
                     </div>
@@ -219,7 +235,7 @@
                             {{description}}
                         </div>
                         <div class="author">
-                            Added by: {{username}} {{created_at}}
+                            Added by:    {{username}}, {{created_at}}
                         </div>
                         <div>
                         </div>
@@ -252,7 +268,7 @@
 
                             <div class="comments-div" id="comments-div">
                                 <div class="single-comment" v-for="c in comments">
-
+                                    <div class="date">{{c.created_at}}</div>
                                     <div class="text">
                                         <div class="username">
                                             {{c.username}}

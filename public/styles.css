@@ -379,15 +379,51 @@ input {
 /* //////////////////////////////////////////////////////////////////////////////// */
 .arrowscontainer {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background: pink;
+    width: 100%;
+    height: 100%;
+    /* background: pink; */
+    /* border: 2px solid blue; */
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    grid-template-areas: "leftarr rightarr";
 }
+
+.arrayicon {
+    width: 50%;
+}
+
+.leftarr {
+    grid-area: leftarr;
+    /* border: 2px solid red; */
+    display: flex;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+.rightarr {
+    grid-area: rightarr;
+    /* border: 2px solid purple; */
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: flex-end;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+.leftarr:hover {
+    opacity: 1;
+}
+
+.rightarr:hover {
+    opacity: 1;
+}
+
 /* ///////////////////////////////////////////////////////////////////////////////////// */
 .picture {
     grid-area: picture;
+    position: relative;
     background: black;
     display: flex;
     justify-content: center;
@@ -509,16 +545,18 @@ input {
 .single-comment {
     /* font-size: 11px; */
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 5px;
 }
 
-.username {
-    font-size: 15px;
-    display: inline;
-    color: #385898;
-    font-weight: bold;
-    font-size: 13px;
-    padding-right: 5px;
+.date {
+    width: 100%;
+    height: 15px;
+    /* border: 2px solid pink; */
+    font-size: 10px;
+    color: #a9a9a9;
+    text-align: center;
 }
 
 .text {
@@ -537,6 +575,14 @@ input {
     /* border: 0px; */
 
     /* color: white; */
+}
+.username {
+    font-size: 15px;
+    display: inline;
+    color: #385898;
+    font-weight: bold;
+    font-size: 13px;
+    padding-right: 5px;
 }
 
 .emptycomment {
