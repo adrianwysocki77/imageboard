@@ -106,12 +106,28 @@ input {
     height: 100vh;
     width: 100%;
 }
+/* //////////////////////////////////////////////////////////////////////////////// */
 
 .icon {
     width: 10%;
     min-width: 30px;
     margin-top: 7px;
 }
+
+/* ANIMATION */
+.rotate {
+    animation: rotation 4s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
 /* /////////////////////////////////////////////////////////////////////////////// */
 
 #main {
@@ -150,6 +166,21 @@ input {
     /* margin-top: 20px; */
 
     /* margin-bottom: 10px; */
+}
+
+/* ///////////////////////////////////////////////////////////////////////////////////// */
+/* LOADING */
+.uploading {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    bottom: 16px;
+    /* height: 100%; */
+    /* border: 2px solid gold; */
+    color: #a9a9a9;
+    font-size: 15px;
 }
 
 .inputs {
@@ -832,6 +863,11 @@ input {
         font-size: 70px;
         height: 130px;
     }
+
+    .uploading {
+        bottom: 20px;
+        /* border: 2px solid pink; */
+    }
 }
 
 @media screen and (max-width: 740px) {
@@ -844,6 +880,12 @@ input {
         min-width: 25px;
         margin-top: 7px;
     }
+
+    .uploading {
+        bottom: 35px;
+        /* border: 2px solid pink; */
+    }
+
     .container {
         display: grid;
         position: absolute;
@@ -966,32 +1008,5 @@ input {
 .trash {
     width: 20px;
 }
-/* ///////////////////////////////////////////////////////////////////////////////////// */
-/* ANIMATION */
-.rotate {
-    animation: rotation 4s infinite linear;
-}
 
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(359deg);
-    }
-}
-/* /////////////////////////////////////////////////////////////////////////////////// */
-/* LOADING */
-.uploading {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    bottom: 16px;
-    /* height: 100%; */
-    /* border: 2px solid gold; */
-    color: #a9a9a9;
-    font-size: 15px;
-}
 /* //////////////////////////////////////////////////////////////////////////////////////// */

@@ -389,9 +389,15 @@
                     this.title == "" ||
                     this.description == "" ||
                     this.username == "" ||
-                    this.file == "" ||
+                    this.file == null ||
                     this.tags == ""
                 ) {
+                    console.log(this.title);
+                    console.log(this.description);
+                    console.log(this.username);
+                    console.log(this.file);
+                    console.log(this.tags);
+
                     this.emptyFields = true;
                     inputs[0].classList.remove("hidden");
                     uploading[0].classList.add("hidden");
@@ -403,45 +409,52 @@
                     this.closeNoMoreFruit();
                     //by wyslac cos do servera musze zrobic to:
                     var formData = new FormData();
-                    console.log("this.file.size", this.file.size);
-                    formData.append("title", this.title);
-                    formData.append("description", this.description);
-                    formData.append("username", this.username);
-                    formData.append("file", this.file);
-                    formData.append("tags", this.tags);
+                    // console.log("this.file.size", this.file.size);
+                    if (this.file.size == 0) {
+                        inputs[0].classList.remove("hidden");
+                    } else {
+                        formData.append("title", this.title);
+                        formData.append("description", this.description);
+                        formData.append("username", this.username);
+                        formData.append("file", this.file);
+                        formData.append("tags", this.tags);
 
-                    console.log("this z upload picture: ", this.file);
-                    //console.log("formData: ", formData); // to jest pusty obj nic szegolnego
+                        console.log("this z upload picture: ", this.file);
+                        //console.log("formData: ", formData); // to jest pusty obj nic szegolnego
 
-                    var vueInstance = this;
-                    axios
-                        .post("/upload", formData)
-                        .then(function(resp) {
-                            console.log("resp.data.success", resp.data.success);
-                            // elements.classList.remove("rotate");
+                        var vueInstance = this;
+                        axios
+                            .post("/upload", formData)
+                            .then(function(resp) {
+                                console.log(
+                                    "resp.data.success",
+                                    resp.data.success
+                                );
+                                // elements.classList.remove("rotate");
 
-                            vueInstance.title = "";
-                            vueInstance.description = "";
-                            vueInstance.file = null;
-                            vueInstance.tags = "";
-                            vueInstance.username = "";
+                                vueInstance.title = "";
+                                vueInstance.description = "";
+                                vueInstance.file = null;
+                                vueInstance.tags = "";
+                                vueInstance.username = "";
 
-                            if (resp.data.success == false) {
-                                console.log("Sorry, no fruit no upload");
-                                vueInstance.noFruit = true;
-                            } else {
-                                vueInstance.images.unshift(resp.data[0]);
-                            }
-                            for (let i = 0; i < icons.length; i++) {
-                                icons[i].classList.remove("rotate");
-                            }
-                            inputs[0].classList.remove("hidden");
-                            uploading[0].classList.add("hidden");
-                        })
-                        .catch(function(err) {
-                            vueInstance.wrongFormat = true;
-                            console.log("err in POST /upload: ", err);
-                        });
+                                if (resp.data.success == false) {
+                                    console.log("Sorry, no fruit no upload");
+                                    vueInstance.noFruit = true;
+                                } else {
+                                    vueInstance.images.unshift(resp.data[0]);
+                                }
+                                for (let i = 0; i < icons.length; i++) {
+                                    icons[i].classList.remove("rotate");
+                                }
+                                inputs[0].classList.remove("hidden");
+                                uploading[0].classList.add("hidden");
+                            })
+                            .catch(function(err) {
+                                vueInstance.wrongFormat = true;
+                                console.log("err in POST /upload: ", err);
+                            });
+                    }
                 }
             },
 
