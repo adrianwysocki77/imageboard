@@ -323,7 +323,7 @@
             username: "",
             file: null,
             lastId: null,
-            tags: null,
+            tags: "",
             tag: null,
             noFruit: null,
             wrongFormat: null,
@@ -420,8 +420,8 @@
                             console.log("resp.data.success", resp.data.success);
                             // elements.classList.remove("rotate");
 
-                            vueInstance.title = null;
-                            vueInstance.description = null;
+                            vueInstance.title = "";
+                            vueInstance.description = "";
                             vueInstance.file = null;
                             vueInstance.tags = "";
                             vueInstance.username = "";
