@@ -23,10 +23,6 @@ exports.upload = (req, res, next) => {
 
     let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
 
-    if (req.file.mimetype == "gif") {
-        console.log("gif file");
-    }
-
     sharp(contents)
         .rotate()
         .resize(null, 2000)
@@ -38,12 +34,6 @@ exports.upload = (req, res, next) => {
             //COMPRESSED FILE
             const compressedFilePath = __dirname + "/uploads/lol" + filename;
             const compressedFileSize = result.size;
-
-            // console.log("filename: ", filename);
-            // console.log("path", path);
-            // console.log("compressedFilePath", compressedFilePath);
-            // console.log("size: ", size);
-            // console.log("compressedFileSize: ", compressedFileSize);
 
             ////////////////////////////////////////////////////////////////////
             //No compressor code
@@ -79,3 +69,32 @@ exports.upload = (req, res, next) => {
             console.log(err);
         });
 };
+
+////////////////////////////////////////////////////////////////////////////////
+// GIFS COMPRESSOR
+// if (req.file.mimetype == "image/gif") {
+//     console.log("gif file");
+// }
+//
+// const INPUT_path_to_your_images =
+//     "src/img/**/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}";
+// const OUTPUT_path = "build/img/";
+//
+// compress_images(
+//     INPUT_path_to_your_images,
+//     OUTPUT_path,
+//     { compress_force: false, statistic: true, autoupdate: true },
+//     false,
+//     { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+//     { png: { engine: "pngquant", command: ["--quality=20-50"] } },
+//     { svg: { engine: "svgo", command: "--multipass" } },
+//     {
+//         gif: {
+//             engine: "gifsicle",
+//             command: ["--colors", "64", "--use-col=web"]
+//         }
+//     },
+//     function() {
+//         console.log("in compte");
+//     }
+// );

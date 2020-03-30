@@ -4,15 +4,12 @@ const db = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
 const fs = require("fs");
-let secrets; // in dev they are in secrets.json which is listed in .gitignore
-
-///////////////////////////////////////////////////////////////////////////////
+let secrets;
 
 app.use(express.static("./public"));
 /////////////////////////////////////////////////////////////////////////////
 // COOKIES
 const cookieSession = require("cookie-session");
-
 if (process.env.NODE_ENV === "production") {
     secrets = process.env;
 } else {
@@ -29,18 +26,10 @@ app.use(
 //BASIC AUTH
 const basicAuth = require("basic-auth");
 const auth = function(req, res, next) {
-    // console.log("secrets.adi: ", secrets.adi);
-    // console.log("secrets.adipass: ", secrets.adipass);
     const creds = basicAuth(req);
 
     function checkCred(creds) {
         let trueCreds;
-        // =
-        // !creds ||
-        // (creds.name != secrets.adi || creds.pass != secrets.adipass);
-        // console.log("******************************************checkCred");
-        // console.log("trueCred: ", trueCreds);
-
         if (!creds) {
             trueCreds = true;
             req.session.admin = false;
@@ -66,13 +55,6 @@ const auth = function(req, res, next) {
         );
         res.sendStatus(401);
     } else {
-        // console.log("creds.name: ", creds.name);
-        // console.log("creds.pass: ", creds.pass);
-
-        // if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
-        // req.session.admin = true;
-        // console.log("req.session.admin: ", req.session.admin);
-        // }
         next();
     }
 };
@@ -209,26 +191,17 @@ White sapote
 Yuzu`;
 const arrFruitsLower = arrFruits.toLowerCase();
 const allFruits = arrFruitsLower.split("\n");
-// console.log("allFruits: ", allFruits);
 ///////////////////////////////////////////////////////////////////////////////
 //GOOGLE CLOUD VISION
-
 const googleVision = async function(url) {
     try {
         // Imports the Google Cloud client library
         const vision = await require("@google-cloud/vision");
         // Creates a client
-
-        // const client = new vision.ImageAnnotatorClient({
-        //     keyFilename: "./secrets.json"
-        // });
-
         let client;
         if (process.env.NODE_ENV === "production") {
             // console.log("in production");
             client = await new vision.ImageAnnotatorClient({
-                // keyFilename: "./google-credentials-heroku.json"
-                // keyFilename: "google-credentials.json"
                 keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
             });
         } else {
@@ -251,10 +224,8 @@ const googleVision = async function(url) {
         const labels = result.labelAnnotations;
         let fruits = [];
         labels.forEach(label => {
-            //        console.log(label.description);
             fruits.push(label.description);
         });
-        console.log("fruits: ", fruits);
         return fruits;
     } catch (e) {
         console.log("err in googleVision!!!");
@@ -263,7 +234,7 @@ const googleVision = async function(url) {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-// UPLOAD CODE
+//POST/UPLOAD
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -286,11 +257,8 @@ const uploader = multer({
     // }
 });
 
-// to tworzy plik
+// CREATING FILE
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("**************************************POST/upload");
-    console.log("upload big picture");
-
     const imageUrl = s3Url + "lol" + req.file.filename;
     const title = req.body.title;
     const description = req.body.description;
@@ -298,29 +266,13 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const tags = req.body.tags;
     const arrTags = tags.replace(" ", "").split(",");
     let fruitInside = false;
-    // console.log("arrTags: ", arrTags);
-    // console.log("JUST REEEEEQQ!!!!!: ", req.body);
-    // console.log("imageUrl: ", imageUrl);
-    // console.log("title: ", title);
-    // console.log("description: ", description);
-    // console.log("username: ", username);
-    // console.log("tags: ", tags);
-    // console.log("tags.lenght: ", tags.length);
-    // console.log("imageUrl: ", imageUrl);
-    ///////////////////////////////////////////////////////////////////////////////
+
     googleVision(imageUrl)
         .then(result => {
-            // console.log("possible fruit in arr: ", result);
             let possibleFruitInside = [];
             for (let i = 0; i < result.length; i++) {
-                // changing letters in results to toLowerCase
-                // console.log(
-                //     "result[i].toLowerCase(): ",
-                //     result[i].toLowerCase()
-                // );
                 possibleFruitInside.push(result[i].toLowerCase());
             }
-            // console.log("possibleFruitInside: ", possibleFruitInside);
 
             for (let i = 0; i < possibleFruitInside.length; i++) {
                 for (let u = 0; u < allFruits.length; u++) {
@@ -331,27 +283,19 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                     }
                 }
             }
-            ///////////////////////////////////////////////////////////////////////////////
+
             if (fruitInside) {
                 db.addImage(imageUrl, username, title, description)
                     .then(addedImage => {
-                        // console.log("inserted images: ", addedImage);
-                        // console.log("result.id: ", addedImage[0].id);
                         if (tags !== "") {
-                            // console.log("arrTags.length > 0");
                             for (let i = 0; i < arrTags.length; i++) {
-                                // console.log("tags [i]: ", i);
                                 db.insertTag(arrTags[i], addedImage[0].id)
                                     .then(insertedTags => {
                                         console.log(
                                             "insertedTags:",
                                             insertedTags
                                         );
-                                        // console.log("i:", i);
                                         if (i == arrTags.length - 1) {
-                                            // console.log("last tag???");
-                                            // console.log("addedImage: ", addedImage);
-
                                             res.json(addedImage);
                                         }
                                     })
@@ -375,28 +319,14 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                     success: false
                 });
             }
-            ///////////////////////////////////////////////////////////////////////////////
-            //
         })
         .catch(err => {
             console.log("err in googleVision: ", err);
         });
-    ////////////////////////////////////////////////////////////////////////////////
-    //after query is successful, send a response
 });
-/////////////////////////////////////////////////////////////////////////////////
-//IMAGES
+///////////////////////////////////////////////////////////////////////////////
+// GET/IMAGES
 app.get("/images", (req, res) => {
-    // console.log("**************************************GET/images");
-    //
-    // let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-    //
-    // console.log("credentialsFromEnv", credentialsFromEnv);
-    //
-    // let credentials = require(credentialsFromEnv);
-    //
-    // console.log("credentials in js!!!", credentials);
-
     db.getAll()
         .then(result => {
             // console.log("result.rows!!!!!!!!: ", result.rows);
@@ -408,13 +338,9 @@ app.get("/images", (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-// GET/selectedimage
+// GET/SELECTEDIMAGE
 app.get("/selectedimage/:id", (req, res) => {
-    console.log("************************************GET/selected/:id");
-    console.log("id: ", req.params.id);
-
     let admin = req.session.admin;
-    console.log("admin: ", admin);
     Promise.all([
         db.selectImage(req.params.id),
         db.selectAllComments(req.params.id),
@@ -422,7 +348,6 @@ app.get("/selectedimage/:id", (req, res) => {
         [{ admin: admin }]
     ])
         .then(data => {
-            // console.log("picture: ", data);
             res.json(data);
         })
         .catch(err => {
@@ -432,52 +357,39 @@ app.get("/selectedimage/:id", (req, res) => {
             );
         });
 });
-
+///////////////////////////////////////////////////////////////////////////////
+//GET/TAGS
 app.get("/tags/:tag", (req, res) => {
-    console.log("************************************/tag/:tag");
-    console.log("tag: ", req.params.tag);
     let tag = req.params.tag;
     db.getImagesByTags(tag)
         .then(tagImages => {
-            console.log("tagImages: ", tagImages);
             res.json(tagImages);
         })
         .catch(err => {
             console.log("err in getImagesByTags: ", err);
         });
 });
-
+///////////////////////////////////////////////////////////////////////////////
+//POST/COMMENT
 app.post("/comment", (req, res) => {
-    console.log("*******************************POST/comment");
-    // console.log("pic id: ", req.body.id);
-    // console.log("user comment: ", req.body.comment);
-    // console.log("username: ", req.body.username);
-    // console.log(req.body);
-
     db.insertComment(req.body.username, req.body.id, req.body.comment)
         .then(data => {
-            // console.log("data from insertComment: ", data);
             res.json(data);
         })
         .catch(err => console.log("err in insertComment: ", err));
 });
-
+////////////////////////////////////////////////////////////////////////////////
+//GET/SHOWMORE
 app.get("/showmore/:lastId", (req, res) => {
-    console.log("**************************************GET/showmore");
     var lastId = req.params.lastId;
-    // console.log("lastId: ", lastId);
-
     db.showMore(lastId).then(result => {
-        // console.log("result from showMore: ", result);
-        // console.log("result[0].lastId from showMore: ", result[0].lowestId);
         res.json(result);
     });
 });
-
+///////////////////////////////////////////////////////////////////////////////
+//GET/DELETE
 app.get("/delete/:imageId", (req, res) => {
-    console.log("**************************************GET/delete/:imageId");
     var imageId = req.params.imageId;
-
     Promise.all([
         db.deleteTags(imageId),
         db.deleteComments(imageId),
@@ -492,5 +404,5 @@ app.get("/delete/:imageId", (req, res) => {
             console.log("err in deleteImage: ", err);
         });
 });
-
+///////////////////////////////////////////////////////////////////////////////
 app.listen(process.env.PORT || 8080, () => console.log(`I'm listening.`));

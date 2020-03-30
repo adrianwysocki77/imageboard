@@ -13,32 +13,32 @@
     <div class="background">
         <div class="flexbackground">
             <div class="colorbackgroundtwo">
-                <img src="banana.svg" alt="apple" class="icon">
+                <img src="./icons/banana.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundfive">
-                <img src="blue.svg" alt="apple" class="icon">
+                <img src="./icons/blue.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundone">
-                <img src="grapes.svg" alt="apple" class="icon">
+                <img src="./icons/grapes.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundtree">
-                <img src="apple.svg" alt="apple" class="icon">
+                <img src="./icons/apple.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundfour">
-                <img src="avocado.svg" alt="apple" class="icon">
+                <img src="./icons/avocado.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundsix">
-                <img src="orange.svg" alt="apple" class="icon">
+                <img src="./icons/orange.svg" alt="apple" class="icon">
             </div>
             <div class="colorbackgroundseven">
-                <img src="pitaya.svg" alt="apple" class="icon">
+                <img src="./icons/pitaya.svg" alt="apple" class="icon">
             </div>
         </div>
 
     </div>
 
     <div id="main">
-<!-- ////////////////////////////////////////////////////////////////////////////// ADirS CODE AdirS CODE -->
+
         <first-component
         v-if="selectedImage"
         post-title="My amazing article"
@@ -85,8 +85,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- handle changed jest specjalnie dla plikow -->
-
             </form>
         </div>
 
@@ -96,24 +94,16 @@
                 No fruit on the picture!!!
             </div>
             <div class="canceldiv">
-                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
+                <img src="./icons/cancel.svg" class="cancel" @click='closeNoMoreFruit'>
             </div>
         </div>
 
-        <!-- <div v-if="wrongFormat" class="nofruit">
-            <div class="one">
-                Only accepted format of the picture is jpg!!!
-            </div>
-            <div class="canceldiv">
-                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
-            </div>
-        </div> -->
         <div v-if="emptyFields" class="nofruit">
             <div class="one">
                 Empty fields!!!
             </div>
             <div class="canceldiv">
-                <img src="cancel.svg" class="cancel" @click='closeNoMoreFruit'>
+                <img src="./icons/cancel.svg" class="cancel" @click='closeNoMoreFruit'>
             </div>
         </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////
@@ -124,12 +114,6 @@
                     <a :href="'#' + c.id" class="flex">
                         <img :src="c.url" class="imgindiv">
                     </a>
-                        <!-- <div class="relative">
-                            <div class="textinimgdiv absolute">
-                                {{c.title}}
-                            </div>
-                        </div> -->
-
                 </div>
             </div>
             <div v-if="lastId" class="more">
@@ -140,7 +124,7 @@
         </div>
     </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////
-//PICTURES BY TAG -->
+//PICTURES BY TAG, STILL WORKING ON-->
     <script type="text/x-template" id="templatetwo" >
        <div class="selectedImage">
            <div class="x" @click="closeModal">
@@ -169,80 +153,40 @@
 
         <div class="overlay">
 
-
-            <!-- <div class="arrxcontainer">
-                <div class="inarrxcontainer">
-                    <div class="newarrows">
-                        <div v-if="smallerId">
-                            <a :href="'#' + smallerId">
-                                <img src="left.svg" class="arrow">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="newarrows">
-                        <div v-if="biggerId">
-                            <a :href="'#' + biggerId">
-                                <img src="right.svg" class="arrow">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-
-
             <div class="xclose" @click="closeModal">
                 <div class="close"></div>
             </div>
 
                 <div class="container">
-
-                    <!-- <div class="newimgdivinselected">
-                        <img :src="url" class="imginselected">
-                    </div> -->
-                    <!-- <div class="newimgdivinselected">
-                        <img :src="url" class="imginselected" id="imageid">
-                    </div> -->
                     <div class="picture">
                         <div class="arrowscontainer">
                             <div class="leftarr" v-if="smallerId">
                                 <a :href="'#' + smallerId" class="leftarr">
-                                    <img src="newleft.svg" class="arrowicon">
+                                    <img src="./icons/newleft.svg" class="arrowicon">
                                 </a>
                             </div>
                             <div class="rightarr" v-if="biggerId">
                                 <a :href="'#' + biggerId" class="rightarr">
-                                    <img src="newright.svg" class="arrowicon">
+                                    <img src="./icons/newright.svg" class="arrowicon">
                                 </a>
                             </div>
-
-
-
                         </div>
-                        <!-- <div class="testdiv"></div> -->
                         <img :src="url" class="imginselected" id="imageid">
                     </div>
                     <div class="other">
-                        <!-- <div class="testdiv"></div> -->
-
                         <div id="deletepic" class="deletepic hidden">
-                            <img src="bin.svg" class="trash" @click="deleteImage">
+                            <img src="./icons/bin.svg" class="trash" @click="deleteImage">
                         </div>
-
                         <div class="title">
                             {{title}}
                         </div>
                         <div class="description">
-                            <img src="pen.svg" class="penicon">
+                            <img src="./icons/pen.svg" class="penicon">
                             {{description}}
                         </div>
                         <div class="author">
                             Added by:    {{username}}, {{created_at}}
                         </div>
-                        <div>
-                        </div>
-
                         <div class="addcomment">
                                 <form class="formdiv">
                                     <div v-if="empty_comment" class="emptycomment">
@@ -250,7 +194,7 @@
                                             Empty comment!!!
                                         </div>
                                         <div class="canceldiv">
-                                            <img src="cancel.svg" class="cancel" @click='closeEmptyComment'>
+                                            <img src="./icons/cancel.svg" class="cancel" @click='closeEmptyComment'>
                                         </div>
                                     </div>
                                     <div class="textareadiv">
@@ -261,8 +205,6 @@
                                         <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="commentuserinput">
                                         <button @click='addComment' class="submit">submit</button>
                                     </div>
-
-
                                 </form>
                         </div>
 
@@ -281,108 +223,21 @@
                                 </div>
                             </div>
 
+                            <!--  TAGS -  CSS UNFINISHED 
+                            <div class="flex30">
+                                <div v-if='tags'>
+                                    <div class="single-comment" v-for="c in tags">
+                                        <a :href="'#' +'/tags/'+c.tag">
+                                            <p class='comment-content'>Tag: {{c.tag}}</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+
                         </div>
-
                     </div>
-
             </div>
-
-
         </div>
-        <!-- <div class="selectedImage">
-
-                <div class="selectedheader">
-                    {{title}}
-                </div>
-
-                <div class="big">
-                    <div class="selectedimgcontainer">
-
-
-                        <div class="inselected">
-                            <div class="newimgdivinselected">
-                                <img :src="url" class="imginselected">
-                            </div>
-                        </div>
-                        <div class="inselected2">
-                            <div class="inselectedrighttop">
-                                <div class="arrxcontainer">
-                                    <div class="inarrxcontainer">
-
-                                        <div class="newarrows">
-                                            <div v-if="smallerId">
-                                                <a :href="'#' + smallerId">
-                                                    <img src="left.svg" class="arrow">
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="newarrows">
-                                            <div v-if="biggerId">
-                                                <a :href="'#' + biggerId">
-                                                    <img src="right.svg" class="arrow">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="inarrxcontainer">
-                                        <div class="newx" @click="closeModal">
-                                            X
-                                        </div>
-                                    </div>
-                                </div>
-                                    <div class="containerdescription">
-                                        <div class="descriptionusername">
-                                           Uploaded by: {{username}}
-                                       </div>
-
-                                       <div>
-                                           description: {{description}}
-                                       </div>
-                                       <div class="inputcomment">
-                                           <form class="flex">
-                                               <div>
-                                                   <input type="text" v-model="comment" name="comment" placeholder="comment" class="selectedinput">
-                                               </div>
-                                               <div>
-                                                   <input type="text" v-model="usernameComment" name="usernameComment" placeholder="username" class="selectedinput">
-                                               </div>
-                                               <div>
-                                                   <button @click='addComment'>submit</button>
-                                               </div>
-                                           </form>
-                                       </div>
-                                    </div>
-
-
-
-                            </div>
-                            <div class="inselectedrightbottom">
-                                <div class="flex30">
-                                    <div v-if='tags'>
-                                        <div class="single-comment" v-for="c in tags">
-                                            <a :href="'#' +'/tags/'+c.tag">
-                                                <p class='comment-content'>Tag: {{c.tag}}</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex70">
-                                    <div class="comments-container" v-if='comments'>
-                                        <div class="single-comment" v-for="c in comments">
-                                            <p class='comment-content'>Comment: {{c.comment}}</p>
-                                            <p class='user-comment'>Name: {{c.username}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div> -->
-
     </script>
 
     <script src="/js/vue.js"></script>
