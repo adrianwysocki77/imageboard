@@ -78,6 +78,8 @@ const auth = function(req, res, next) {
 };
 
 app.use(auth);
+app.use(express.json());
+
 ///////////////////////////////////////////////////////////////////////////////
 // ALL FRESH FRUITS!!!
 const arrFruits = `Açaí
@@ -284,36 +286,12 @@ const uploader = multer({
     // }
 });
 
-///////////////////////////////////////////////////////////////////////////////
-app.use(express.json());
-
-app.get("/images", (req, res) => {
-    // console.log("**************************************GET/images");
-    //
-    // let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-    //
-    // console.log("credentialsFromEnv", credentialsFromEnv);
-    //
-    // let credentials = require(credentialsFromEnv);
-    //
-    // console.log("credentials in js!!!", credentials);
-
-    db.getAll()
-        .then(result => {
-            // console.log("result.rows!!!!!!!!: ", result.rows);
-            res.json(result.rows);
-        })
-        .catch(err => {
-            console.log("err in get all: ", err);
-        });
-});
-
 // to tworzy plik
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("**************************************POST/upload");
     console.log("upload big picture");
 
-    const imageUrl = s3Url + req.file.filename;
+    const imageUrl = s3Url + "lol" + req.file.filename;
     const title = req.body.title;
     const description = req.body.description;
     const username = req.body.username;
@@ -406,6 +384,29 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     ////////////////////////////////////////////////////////////////////////////////
     //after query is successful, send a response
 });
+/////////////////////////////////////////////////////////////////////////////////
+//IMAGES
+app.get("/images", (req, res) => {
+    // console.log("**************************************GET/images");
+    //
+    // let credentialsFromEnv = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    //
+    // console.log("credentialsFromEnv", credentialsFromEnv);
+    //
+    // let credentials = require(credentialsFromEnv);
+    //
+    // console.log("credentials in js!!!", credentials);
+
+    db.getAll()
+        .then(result => {
+            // console.log("result.rows!!!!!!!!: ", result.rows);
+            res.json(result.rows);
+        })
+        .catch(err => {
+            console.log("err in get all: ", err);
+        });
+});
+
 ///////////////////////////////////////////////////////////////////////////////
 // GET/selectedimage
 app.get("/selectedimage/:id", (req, res) => {

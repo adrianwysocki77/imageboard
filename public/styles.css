@@ -25,6 +25,11 @@ input {
 .input {
     max-width: 85px;
 }
+
+.descriptioninput {
+    max-width: 175px;
+    /* margin-right: 30px; */
+}
 /* /////////////////////////////////////////////////////////////////////////////// */
 /* BACKGROUND */
 .background {
@@ -163,6 +168,8 @@ input {
     border: 2px solid white;
     margin: 0px;
     position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
     /* margin-top: 20px; */
 
     /* margin-bottom: 10px; */

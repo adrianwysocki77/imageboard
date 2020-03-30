@@ -21,144 +21,61 @@ exports.upload = (req, res, next) => {
         return res.sendStatus(500);
     }
 
-    // fs.readFile("./uploads/fruit.jpg", function(err, data) {
-    //     if (err) throw err;
-    //     console.log("data in readfile!!!: ", data);
-    //     image = data;
-    // });
-    // console.log("data out of readFile: ", image);
-    // console.log("filename");
-    //
-    ///////////////////////////////////////////////////////////////////////////////
-    // let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
-    //
-    // sharp(contents)
-    //     .toFile("output.gif")
-    //     .then(info => {
-    //         console.log("something: ", info);
-    //         next();
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
+    let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // var stats = fs.statSync(`./uploads/${req.file.filename}`);
-    // var fileSizeInBytes = stats["size"];
-    //
-    // console.log("req.file: ", req.file);
-    //
-    // let g = sharp(contents)
-    //     .rotate()
-    //     .resize(300)
-    //     .toBuffer()
-    //     .then(data => {
-    //         console.log("data sharp compression: ", data);
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
-    // console.log("g!!!!: ", g);
-    //
-    // var stats = fs.statSync(`./uploads/${req.file.filename}`);
-    // var fileSizeInBytes = stats["size"];
-    // console.log("fileSizeInBytes: ", fileSizeInBytes);
-    //
-    // console.log("req.file: ", req.file);
-    ///////////////////////////////////////////////////////////////////////////////
-    //Stary s3
-    const { filename, mimetype, path, size, originalname } = req.file;
+    if (req.file.mimetype == "gif") {
+        console.log("gif file");
+    }
 
-    console.log("orginalname: ", originalname);
+    sharp(contents)
+        .rotate()
+        .resize(null, 2000)
+        .toFile(`./uploads/lol${req.file.filename}`)
+        .then(result => {
+            console.log("result: ", result);
+            const { filename, mimetype, path, size, originalname } = req.file;
+            ////////////////////////////////////////////////////////////////////
+            //COMPRESSED FILE
+            const compressedFilePath = __dirname + "/uploads/lol" + filename;
+            const compressedFileSize = result.size;
 
-    s3.putObject({
-        Bucket: "fruitybucket",
-        ACL: "public-read",
-        Key: filename,
-        Body: fs.createReadStream(path),
-        ContentType: mimetype,
-        ContentLength: size
-    })
-        .promise()
-        .then(() => {
-            console.log("it worked!");
-            next();
-            fs.unlink(path, () => {});
+            // console.log("filename: ", filename);
+            // console.log("path", path);
+            // console.log("compressedFilePath", compressedFilePath);
+            // console.log("size: ", size);
+            // console.log("compressedFileSize: ", compressedFileSize);
+
+            ////////////////////////////////////////////////////////////////////
+            //No compressor code
+            // s3.putObject({
+            //     Bucket: "fruitybucket",
+            //     ACL: "public-read",
+            //     Key: filename,
+            //     Body: fs.createReadStream(path),
+            //     ContentType: mimetype,
+            //     ContentLength: size
+            // })
+
+            s3.putObject({
+                Bucket: "fruitybucket",
+                ACL: "public-read",
+                Key: "lol" + filename,
+                Body: fs.createReadStream(compressedFilePath),
+                ContentType: mimetype,
+                ContentLength: compressedFileSize
+            })
+                .promise()
+                .then(() => {
+                    next();
+                    fs.unlink(path, () => {});
+                    fs.unlink(`./uploads/lol${req.file.filename}`, () => {});
+                })
+                .catch(err => {
+                    console.log(err, "failure :(");
+                    res.sendStatus(500);
+                });
         })
         .catch(err => {
-            console.log(err, "failure :(");
-            res.sendStatus(500);
+            console.log(err);
         });
 };
-/////////////////////////////////////////////////////////////////////////////////
-//Nowy s3
-
-// /////////////////////////////////////////////////////////////////////////////////
-// //FIRST BAD COMPRESSOR
-// const imagemin = require("imagemin");
-// const imageminMozjpeg = require("imagemin-mozjpeg");
-//
-// exports.upload = (req, res, next) => {
-//     if (!req.file) {
-//         console.log(`req.file ain't there`);
-//         return res.sendStatus(500);
-//     }
-//
-//     console.log("req.file.mimetype: ", req.file.mimetype);
-//     if (req.file.mimetype != "image/jpeg") {
-//         console.log(`req.file.mimetype != "image/jpeg": `, req.file.mimetype);
-//         return res.sendStatus(500);
-//     }
-//     ///////////////////////////////////////////////////////////////////////////////
-//     console.log("req.file.size: ", req.file.size);
-//     (async () => {
-//         console.log("in compressing!!");
-//         const files = await imagemin([`./uploads/${req.file.filename}`], {
-//             // const files = await imagemin([`./uploads/fruit.jpg`], {
-//             destination: "./uploads",
-//             plugins: [imageminMozjpeg({ quality: 40 })]
-//         });
-//         await console.log("!!!!!!!!!!!files in compression: ", files);
-//
-//         console.log("req.file.size: ", req.file.size);
-//         console.log("after compression");
-//
-//         let size;
-//         await setTimeout(function() {
-//             console.log("SETTIMEOUT 1");
-//             let path1 = `./uploads/${req.file.filename}`;
-//             let stats = fs.statSync(path1);
-//             console.log("stats: ", stats);
-//             size = stats.size;
-//         }, 2000);
-//
-//         ///////////////////////////////////////////////////////////////////////////////
-//
-//         ///////////////////////////////////////////////////////////////////////////////
-//         const { filename, mimetype, path } = req.file;
-//
-//         console.log("req.file: ", req.file);
-//
-//         await setTimeout(function() {
-//             console.log("setTimeout START!!!");
-//             s3.putObject({
-//                 Bucket: "spicedling",
-//                 ACL: "public-read",
-//                 Key: filename,
-//                 Body: fs.createReadStream(path),
-//                 ContentType: mimetype,
-//                 ContentLength: size
-//             })
-//                 .promise()
-//                 .then(() => {
-//                     console.log("it worked!");
-//                     next();
-//                     fs.unlink(path, () => {});
-//                 })
-//                 .catch(err => {
-//                     console.log(err, "failure :(");
-//                     res.sendStatus(500);
-//                 });
-//         }, 3000);
-//     })();
-// };
