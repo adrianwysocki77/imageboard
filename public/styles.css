@@ -712,7 +712,7 @@ input {
     justify-content: flex-end;
     padding-right: 5px;
     padding-top: 5px;
-    position: absolute;
+    /* position: absolute; */
 }
 
 .trash {
