@@ -277,6 +277,8 @@ const uploader = multer({
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     let imageUrl;
 
+    console.log("req.file.mimetype: ", req.file.mimetype);
+
     if (req.file.mimetype == "image/gif") {
         console.log("req.file.mimetype: ", req.file.mimetype);
         imageUrl = s3Url + req.file.filename;
