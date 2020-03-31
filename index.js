@@ -56,6 +56,12 @@ const auth = function(req, res, next) {
         ) {
             console.log("logged as wysoccy");
             trueCreds = false;
+        } else if (
+            creds.name == secrets.lesna &&
+            creds.pass == secrets.lesnapass
+        ) {
+            console.log("logged as wysoccy");
+            trueCreds = false;
         } else {
             console.log("wrong login or password");
             trueCreds = true;
