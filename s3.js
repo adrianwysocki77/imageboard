@@ -50,13 +50,6 @@ exports.upload = (req, res, next) => {
             .toFile(`./uploads/lol${req.file.filename}`)
             .then(result => {
                 console.log("result: ", result);
-                const {
-                    filename,
-                    mimetype,
-                    path,
-                    size,
-                    originalname
-                } = req.file;
                 ////////////////////////////////////////////////////////////////////
                 //COMPRESSED FILE
                 const compressedFilePath =
