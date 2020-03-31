@@ -160,14 +160,13 @@
                 <div class="container">
                     <div class="picture">
                         <div class="arrowscontainer">
-
-                            <div class="rightarr" v-if="biggerId">
-                                <a :href="'#' + biggerId" class="rightarr">
+                            <div class="leftarr" v-if="smallerId">
+                                <a :href="'#' + smallerId" class="leftarr">
                                     <img src="./icons/newleft.svg" class="arrowicon">
                                 </a>
                             </div>
-                            <div class="leftarr" v-if="smallerId">
-                                <a :href="'#' + smallerId" class="leftarr">
+                            <div class="rightarr" v-if="biggerId">
+                                <a :href="'#' + biggerId" class="rightarr">
                                     <img src="./icons/newright.svg" class="arrowicon">
                                 </a>
                             </div>
@@ -224,7 +223,7 @@
                                 </div>
                             </div>
 
-                            <!--  TAGS -  CSS UNFINISHED
+                            <!--  TAGS -  CSS UNFINISHED 
                             <div class="flex30">
                                 <div v-if='tags'>
                                     <div class="single-comment" v-for="c in tags">

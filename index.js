@@ -310,8 +310,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                 }
             }
 
-            fruitInside = true;
-
             if (fruitInside) {
                 db.addImage(imageUrl, username, title, description)
                     .then(addedImage => {
