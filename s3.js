@@ -21,53 +21,85 @@ exports.upload = (req, res, next) => {
         return res.sendStatus(500);
     }
 
-    let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
+    if (req.file.mimetype == "image/gif") {
+        const { filename, path, mimetype, size } = req.file;
 
-    sharp(contents)
-        .rotate()
-        .resize(null, 2000)
-        .toFile(`./uploads/lol${req.file.filename}`)
-        .then(result => {
-            console.log("result: ", result);
-            const { filename, mimetype, path, size, originalname } = req.file;
-            ////////////////////////////////////////////////////////////////////
-            //COMPRESSED FILE
-            const compressedFilePath = __dirname + "/uploads/lol" + filename;
-            const compressedFileSize = result.size;
-
-            ////////////////////////////////////////////////////////////////////
-            //No compressor code
-            // s3.putObject({
-            //     Bucket: "fruitybucket",
-            //     ACL: "public-read",
-            //     Key: filename,
-            //     Body: fs.createReadStream(path),
-            //     ContentType: mimetype,
-            //     ContentLength: size
-            // })
-
-            s3.putObject({
-                Bucket: "fruitybucket",
-                ACL: "public-read",
-                Key: "lol" + filename,
-                Body: fs.createReadStream(compressedFilePath),
-                ContentType: mimetype,
-                ContentLength: compressedFileSize
-            })
-                .promise()
-                .then(() => {
-                    next();
-                    fs.unlink(path, () => {});
-                    fs.unlink(`./uploads/lol${req.file.filename}`, () => {});
-                })
-                .catch(err => {
-                    console.log(err, "failure :(");
-                    res.sendStatus(500);
-                });
+        s3.putObject({
+            Bucket: "fruitybucket",
+            ACL: "public-read",
+            Key: filename,
+            Body: fs.createReadStream(path),
+            ContentType: mimetype,
+            ContentLength: size
         })
-        .catch(err => {
-            console.log(err);
-        });
+            .promise()
+            .then(() => {
+                next();
+                fs.unlink(path, () => {});
+            })
+            .catch(err => {
+                console.log(err, "failure :(");
+                res.sendStatus(500);
+            });
+    } else {
+        let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
+
+        sharp(contents)
+            .rotate()
+            .resize(null, 2000)
+            .toFile(`./uploads/lol${req.file.filename}`)
+            .then(result => {
+                console.log("result: ", result);
+                const {
+                    filename,
+                    mimetype,
+                    path,
+                    size,
+                    originalname
+                } = req.file;
+                ////////////////////////////////////////////////////////////////////
+                //COMPRESSED FILE
+                const compressedFilePath =
+                    __dirname + "/uploads/lol" + filename;
+                const compressedFileSize = result.size;
+
+                ////////////////////////////////////////////////////////////////////
+                //No compressor code
+                // s3.putObject({
+                //     Bucket: "fruitybucket",
+                //     ACL: "public-read",
+                //     Key: filename,
+                //     Body: fs.createReadStream(path),
+                //     ContentType: mimetype,
+                //     ContentLength: size
+                // })
+
+                s3.putObject({
+                    Bucket: "fruitybucket",
+                    ACL: "public-read",
+                    Key: "lol" + filename,
+                    Body: fs.createReadStream(compressedFilePath),
+                    ContentType: mimetype,
+                    ContentLength: compressedFileSize
+                })
+                    .promise()
+                    .then(() => {
+                        next();
+                        fs.unlink(path, () => {});
+                        fs.unlink(
+                            `./uploads/lol${req.file.filename}`,
+                            () => {}
+                        );
+                    })
+                    .catch(err => {
+                        console.log(err, "failure :(");
+                        res.sendStatus(500);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////

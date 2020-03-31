@@ -275,7 +275,15 @@ const uploader = multer({
 
 // CREATING FILE
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    const imageUrl = s3Url + "lol" + req.file.filename;
+    let imageUrl;
+
+    if (req.file.mimetype == "image/gif") {
+        console.log("req.file.mimetype: ", req.file.mimetype);
+        imageUrl = s3Url + req.file.filename;
+    } else {
+        imageUrl = s3Url + "lol" + req.file.filename;
+    }
+
     const title = req.body.title;
     const description = req.body.description;
     const username = req.body.username;
