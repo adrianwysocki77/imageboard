@@ -6,7 +6,6 @@ const { s3Url } = require("./config");
 const fs = require("fs");
 let secrets;
 
-app.use(express.static("./public"));
 /////////////////////////////////////////////////////////////////////////////
 // COOKIES
 const cookieSession = require("cookie-session");
@@ -83,7 +82,7 @@ const auth = function(req, res, next) {
 
 app.use(auth);
 app.use(express.json());
-
+app.use(express.static("./public"));
 ///////////////////////////////////////////////////////////////////////////////
 // ALL FRESH FRUITS!!!
 const arrFruits = `Açaí
