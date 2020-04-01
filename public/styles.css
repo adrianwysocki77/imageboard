@@ -386,8 +386,8 @@ input {
 .imginselected {
     display: flex;
     object-fit: cover;
-    max-width: 95%;
-    max-height: 95%;
+    max-width: 90%;
+    max-height: 90%;
 }
 
 .other {
