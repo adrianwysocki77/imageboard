@@ -347,7 +347,7 @@ input {
 .leftarr {
     grid-area: leftarr;
     display: flex;
-    opacity: 0.3;
+    opacity: 0.6;
     transition: 0.5s ease;
     align-items: center;
     width: 100%;
@@ -358,7 +358,7 @@ input {
     grid-area: rightarr;
     display: flex;
     justify-content: flex-end;
-    opacity: 0.3;
+    opacity: 0.6;
     transition: 0.5s ease;
     align-items: center;
     width: 100%;
