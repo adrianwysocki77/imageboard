@@ -23,64 +23,65 @@ app.use(
 );
 ///////////////////////////////////////////////////////////////////////////////
 //BASIC AUTH
-const basicAuth = require("basic-auth");
-const auth = function(req, res, next) {
-    const creds = basicAuth(req);
+// const basicAuth = require("basic-auth");
+// const auth = function(req, res, next) {
+//     const creds = basicAuth(req);
+//
+//     function checkCred(creds) {
+//         let trueCreds;
+//         if (!creds) {
+//             console.log("no creds!!!");
+//             trueCreds = true;
+//             req.session.admin = false;
+//         } else if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
+//             console.log("logged as an admin");
+//             trueCreds = false;
+//             req.session.admin = true;
+//         } else if (
+//             creds.name == secrets.tomon &&
+//             creds.pass == secrets.tomonpass
+//         ) {
+//             console.log("logged as tomon");
+//             trueCreds = false;
+//         } else if (
+//             creds.name == secrets.wysoccy &&
+//             creds.pass == secrets.wysoccypass
+//         ) {
+//             console.log("logged as wysoccy");
+//             trueCreds = false;
+//         } else if (
+//             creds.name == secrets.peppermint &&
+//             creds.pass == secrets.peppermintpass
+//         ) {
+//             console.log("logged as wysoccy");
+//             trueCreds = false;
+//         } else if (
+//             creds.name == secrets.lesna &&
+//             creds.pass == secrets.lesnapass
+//         ) {
+//             console.log("logged as wysoccy");
+//             trueCreds = false;
+//         } else {
+//             console.log("wrong login or password");
+//             trueCreds = true;
+//         }
+//
+//         return trueCreds;
+//     }
+//
+//     if (checkCred(creds)) {
+//         res.setHeader(
+//             "WWW-Authenticate",
+//             'Basic realm="Enter your credentials to see this stuff."'
+//         );
+//         res.sendStatus(401);
+//     } else {
+//         next();
+//     }
+// };
+//
+// app.use(auth);
 
-    function checkCred(creds) {
-        let trueCreds;
-        if (!creds) {
-            console.log("no creds!!!");
-            trueCreds = true;
-            req.session.admin = false;
-        } else if (creds.name == secrets.adi && creds.pass == secrets.adipass) {
-            console.log("logged as an admin");
-            trueCreds = false;
-            req.session.admin = true;
-        } else if (
-            creds.name == secrets.tomon &&
-            creds.pass == secrets.tomonpass
-        ) {
-            console.log("logged as tomon");
-            trueCreds = false;
-        } else if (
-            creds.name == secrets.wysoccy &&
-            creds.pass == secrets.wysoccypass
-        ) {
-            console.log("logged as wysoccy");
-            trueCreds = false;
-        } else if (
-            creds.name == secrets.peppermint &&
-            creds.pass == secrets.peppermintpass
-        ) {
-            console.log("logged as wysoccy");
-            trueCreds = false;
-        } else if (
-            creds.name == secrets.lesna &&
-            creds.pass == secrets.lesnapass
-        ) {
-            console.log("logged as wysoccy");
-            trueCreds = false;
-        } else {
-            console.log("wrong login or password");
-            trueCreds = true;
-        }
-
-        return trueCreds;
-    }
-
-    if (checkCred(creds)) {
-        res.setHeader(
-            "WWW-Authenticate",
-            'Basic realm="Enter your credentials to see this stuff."'
-        );
-        res.sendStatus(401);
-    } else {
-        next();
-    }
-};
-
-app.use(auth);
 app.use(express.json());
 app.use(express.static("./public"));
 ///////////////////////////////////////////////////////////////////////////////
