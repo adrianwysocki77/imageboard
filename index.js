@@ -248,6 +248,7 @@ const googleVision = async function(url) {
         labels.forEach(label => {
             fruits.push(label.description);
         });
+        console.log("fruits", fruits);
         return fruits;
     } catch (e) {
         console.log("err in googleVision!!!");
