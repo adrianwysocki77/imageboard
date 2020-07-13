@@ -26,7 +26,7 @@ When picture is rejected you can see message.
 
 Click on the picture. Now you can add comments using your own nick :)
 
-![img](./readme_images/4.png)
+![img](./images_readme/2.png)
 
 ---
 
