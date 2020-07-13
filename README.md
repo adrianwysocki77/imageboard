@@ -1,4 +1,4 @@
-###Fruity Board
+### Fruity Board
 
 In this project I used Vue.js for the first time. Inspiration came with love for colors, taste and beautiful symmetrical patterns of fruits. Main conception was to give opportunity to just share images where is at least one visible random fruit. Picture is filterd with help of Google API, pictures without fruits are rejected.
 
