@@ -6,7 +6,7 @@ First time using Vue.js! This project came to life when I realized the world was
 
 In the back, a Node.js Express server and a PostgreSQL database CRUDfully make sure everything is kept alive.
 
-![img](./readme_images/start.png)
+![img](./images_readme/fruity_board.png)
 
 The image board displayes the 20 most recent pictures, upon scrolling down more images are being loaded and displayed
 
