@@ -16,10 +16,7 @@ For frontend I used just pure HTML/CSS.
 
 Backend was build with PostgreSQL for database and Node.js with Express server for the rest.
 Uploaded pictures are sent to AWS S3, in database are stored only URLs.
-
-![img](./images_readme/3.png)
-
-When picture is rejected you can see message:
+When picture is rejected you can see message.
 
 ![img](./images_readme/4.png)
 
@@ -27,13 +24,9 @@ When picture is rejected you can see message:
 
 ### Interaction
 
-Visit a posts page, to get a better look.
+Click on the picture. Now you can add comments using your own nick :)
 
-![img](./readme_images/comment1.png)
-
-Interact with the author, ask questions, critique, praise, or simply share your thoughts in the comment section.
-
-![img](./readme_images/comment2.png)
+![img](./readme_images/4.png)
 
 ---
 
