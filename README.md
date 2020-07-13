@@ -1,26 +1,27 @@
 ### Fruity Board
 
-In this project I used Vue.js for the first time. Inspiration came with love for colors, taste and beautiful symmetrical patterns of fruits. Main conception was to give opportunity to just share images where is at least one visible random fruit. Picture is filterd with help of Google API, pictures without fruits are rejected.
+In this project I used Vue.js for the first time. Inspiration came with love for colors, taste and beautiful symmetrical patterns of fruits. Main conception was to give opportunity to just share images where is at least one visible random fruit. Uploaded Pictures are filtered with help of Google API, pictures without fruits are rejected. Uploading pictures you can add: title, author, tags and description.
+
+---
+
+### Frontend
+
+For frontend I used just pure HTML/CSS.
+
+![img](./images_readme/1.png)
 
 ---
 
 ### Backend
 
-In the back, a Node.js Express server and a PostgreSQL database CRUDfully make sure everything is kept alive.
+Backend was build with PostgreSQL for database and Node.js with Express server for the rest.
+Uploaded pictures are sent to AWS S3, in database are stored only URLs.
 
-![img](./images_readme/1.png)
+![img](./images_readme/3.png)
 
-The image board displayes the 20 most recent pictures, upon scrolling down more images are being loaded and displayed
+When picture is rejected you can see message:
 
-![img](./readme_images/1.gif)
-
----
-
-### Upload
-
-New images get grabbed using Multer, then uploaded to AWS S3, with a reference stored in the database.
-
-![img](./readme_images/upload.png)
+![img](./images_readme/4.png)
 
 ---
 
