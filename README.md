@@ -6,9 +6,15 @@ In this project I used Vue.js for the first time. Inspiration came with love for
 
 ### Frontend
 
-For frontend I used just pure HTML/CSS.
+To build a frontend I used just pure HTML/CSS.
 
 ![img](./images_readme/1.png)
+
+---
+
+To navigate to different pages I'm using Hash-Routing, so selected picture can be send to someone with URL.
+
+![img](./images_readme/5.png)
 
 ---
 
@@ -29,17 +35,5 @@ Click on the picture. Now you can add comments using your own nick :)
 ![img](./images_readme/2.png)
 
 ---
-
-### Frontend
-
-In the front, Vue.js works its magic.
-
-I wanted the design to be kinda shitty so all icons are carelessly hand drawn with a trackpad.
-
-![img](./readme_images/icons.jpg)
-
-Navigation to different pages is provided with Hash-Routing, so that posts can be sent to other places on the internet.
-
-![img](./readme_images/url.png)
 
 ---
