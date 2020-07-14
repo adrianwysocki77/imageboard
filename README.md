@@ -14,7 +14,7 @@ To build a frontend I used just pure HTML/CSS.
 
 To navigate to different pages I'm using Hash-Routing, so selected picture can be send to someone with URL.
 
-![img](./images_readme/5.png)
+![img](./images_readme/6.png)
 
 ---
 
