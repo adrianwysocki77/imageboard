@@ -18,12 +18,6 @@ To navigate to different sites I'm using Hash-Routing - selected picture can be 
 
 ---
 
-Page is fully responsive.
-
-![img](./images_readme/6.png)
-
-![img](./images_readme/6.png)
-
 ### Backend
 
 Backend was build with PostgreSQL for database and Node.js with Express server for the rest.
