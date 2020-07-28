@@ -1,6 +1,6 @@
 ### Fruity Board
 
-In this project I've used Vue.js for the first time. Inspiration came with love for colors, taste and beautiful symmetrical patterns of fruits. Main conception was to give opportunity to share images where is at least one visible random fruit. Uploaded Pictures are filtered with help of the Google API, pictures without fruits are rejected. When uploading pictures you can add: title, author, tags and description.
+In this project I've used Vue.js for the first time. Inspiration came with love for colors, taste and beautiful symmetrical patterns of fruits. Main conception was to give opportunity to share images where is at least one visible random fruit. Uploaded pictures are filtered with help of the Google API, pictures without fruits are rejected. When uploading pictures you can add: title, author, tags and description.
 
 https://fruityboard.herokuapp.com
 
