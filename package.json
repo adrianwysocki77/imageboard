@@ -28,7 +28,7 @@
         "multer-s3-rotate": "^1.1.0",
         "nodemon": "^1.19.4",
         "sharp": "^0.25.2",
-        "spiced-pg": "^1.0.0",
+        "spiced-pg": "^1.0.4",
         "uid-safe": "^2.1.4"
     },
     "repository": {
