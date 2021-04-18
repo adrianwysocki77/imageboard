@@ -8,9 +8,6 @@
 </head>
 <body>
 
-
-
-
     <div class="background">
         <div class="flexbackground">
             <div class="colorbackgroundtwo">
@@ -39,7 +36,6 @@
     </div>
 
     <div id="main">
-
         <first-component
         v-if="selectedImage"
         post-title="My amazing article"
@@ -70,7 +66,7 @@
                     </div>
                     <div class="flexinput">
                         <input v-model="username" name="username" placeholder="username" type="text" class="input">
-                        <input v-model="tags" name="tags" placeholder="tags" type="text" class="input">
+<!--  TODO finish  <input v-model="tags" name="tags" placeholder="tags" type="text" class="input">-->
                     </div>
                     <div class="flexinput">
                         <input v-model="description" name="description" placeholder="description" type="text" class="descriptioninput">
@@ -107,8 +103,8 @@
                 <img src="./icons/cancel.svg" class="cancel" @click='closeNoMoreFruit'>
             </div>
         </div>
-<!-- ///////////////////////////////////////////////////////////////////////////////
-// IMAGES IN MAIN IMG CONTAINER -->
+
+        <!--  IMAGES IN MAIN IMG CONTAINER -->
         <div v-if="images" class="imgcontainer">
             <div class="imgdivcontainer">
                 <div v-for="c in images" class="imgdiv">
@@ -124,8 +120,8 @@
             </div>
         </div>
     </div>
-<!-- ///////////////////////////////////////////////////////////////////////////////
-//PICTURES BY TAG, STILL WORKING ON-->
+
+    <!-- PICTURES BY TAG, STILL WORKING ON-->
     <script type="text/x-template" id="templatetwo" >
        <div class="selectedImage">
            <div class="x" @click="closeModal">
@@ -147,9 +143,8 @@
         </div>
 
     </script>
-<!-- ///////////////////////////////////////////////////////////////////////////////
-//SELECTED IMAGE -->
 
+    <!-- SELECTED IMAGE -->
     <script type="text/x-template" id="template" >
 
         <div class="overlay">
@@ -211,7 +206,6 @@
 
                         <div class="comments">
                             <div class="commentstext">Comments</div>
-
                             <div class="comments-div" id="comments-div">
                                 <div class="single-comment" v-for="c in comments">
                                     <div class="date">{{c.created_at}}</div>
@@ -234,7 +228,6 @@
                                     </div>
                                 </div>
                             </div> -->
-
                         </div>
                     </div>
             </div>
